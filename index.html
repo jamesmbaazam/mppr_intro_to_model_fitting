@@ -455,16 +455,16 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 <ul>
 <li>We have mathematical models (e.g., SIR, SEIR)</li>
 <li>We have real-world data (case counts, hospitalizations)</li>
-<li><strong>How do we connect them?</strong></li>
+<li><strong><span style="color: tomato;">How do we connect them?</span></strong></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="the-goal">The Goal</h3>
 <ul>
-<li>Find parameter values that make our model predictions match observed data</li>
-<li>Quantify uncertainty in our estimates</li>
-<li>Make reliable predictions and policy recommendations</li>
+<li><span style="color: blue;">Find parameter values that make our model predictions match observed data</span></li>
+<li><span style="color: blue;">Quantify uncertainty in our estimates</span></li>
+<li><span style="color: blue;">Make reliable predictions and policy recommendations</span></li>
 </ul>
 </section>
 <section id="example-outbreak-data" class="slide level2">
@@ -478,26 +478,26 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> How do we estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> from this noisy data?</p>
+<p><strong><span style="color: tomato;">Question:</span></strong> How do we estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> from this noisy data?</p>
 </section>
 <section id="types-of-fitting-methods" class="slide level2">
 <h2>Types of Fitting Methods</h2>
 <h3 id="deterministic-methods">Deterministic Methods</h3>
 <ul>
-<li>Least Squares</li>
-<li>Maximum Likelihood Estimation (MLE)</li>
+<li><strong><span style="color: tomato;">Least Squares</span></strong></li>
+<li><strong><span style="color: tomato;">Maximum Likelihood Estimation (MLE)</span></strong></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="stochastic-methods">Stochastic Methods</h3>
 <ul>
-<li>Markov Chain Monte Carlo (MCMC)</li>
-<li>Sequential Monte Carlo (SMC)</li>
-<li>Particle MCMC (pMCMC)</li>
-<li>Approximate Bayesian Computation (ABC)</li>
+<li><strong><span style="color: blue;">Markov Chain Monte Carlo (MCMC)</span></strong></li>
+<li><strong><span style="color: blue;">Sequential Monte Carlo (SMC)</span></strong></li>
+<li><strong><span style="color: blue;">Particle MCMC (pMCMC)</span></strong></li>
+<li><strong><span style="color: blue;">Approximate Bayesian Computation (ABC)</span></strong></li>
 </ul>
-<p><strong>Today’s Focus:</strong> Least Squares and MLE as foundations</p>
+<p><strong><span style="color: tomato;">Today’s Focus:</span></strong> Least Squares and MLE as foundations</p>
 </section></section>
 <section>
 <section id="part-ii-conceptual-foundations" class="title-slide slide level1 center">
@@ -506,7 +506,7 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </section>
 <section id="what-is-model-fitting" class="slide level2">
 <h2>What is Model Fitting?</h2>
-<p><strong>Definition:</strong> The process of finding parameter values that make a mathematical model’s predictions as close as possible to observed data.</p>
+<p><strong><span style="color: blue;">Definition:</span></strong> The process of finding parameter values that make a mathematical model’s predictions as close as possible to observed data.</p>
 </section>
 <section id="mathematical-formulation" class="slide level2">
 <h2>Mathematical Formulation</h2>
@@ -527,15 +527,15 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 
 <h3 id="parameters-to-estimate">Parameters to Estimate</h3>
 <ul>
-<li><span class="math inline">\(\beta\)</span> = transmission rate</li>
-<li><span class="math inline">\(\gamma\)</span> = recovery rate</li>
+<li><span style="color: tomato;"><span class="math inline">\(\beta\)</span> = transmission rate</span></li>
+<li><span style="color: tomato;"><span class="math inline">\(\gamma\)</span> = recovery rate</span></li>
 </ul>
 </section>
 <section id="key-quantities" class="slide level2">
 <h2>Key Quantities</h2>
 <ul>
-<li><span class="math inline">\(R_0 = \frac{\beta}{\gamma}\)</span> (basic reproduction number)</li>
-<li>Infectious period = <span class="math inline">\(\frac{1}{\gamma}\)</span></li>
+<li><span style="color: blue;"><span class="math inline">\(R_0 = \frac{\beta}{\gamma}\)</span> (basic reproduction number)</span></li>
+<li><span style="color: blue;">Infectious period = <span class="math inline">\(\frac{1}{\gamma}\)</span></span></li>
 </ul>
 </section>
 <section id="sources-of-uncertainty" class="slide level2">
@@ -573,14 +573,14 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </section>
 <section id="the-fitting-challenge" class="slide level2">
 <h2>The Fitting Challenge</h2>
-<p><strong>Identifiability Problem:</strong> Multiple parameter combinations can produce similar model outputs</p>
+<p><strong><span style="color: tomato;">Identifiability Problem:</span></strong> Multiple parameter combinations can produce similar model outputs</p>
 <p><strong>Example:</strong></p>
 <ul>
 <li>High <span class="math inline">\(\beta\)</span>, high <span class="math inline">\(\gamma\)</span></li>
 <li>Low <span class="math inline">\(\beta\)</span>, low <span class="math inline">\(\gamma\)</span></li>
 </ul>
 <p>Both might give similar epidemic curves!</p>
-<p><strong>Solution:</strong> Use additional information (e.g., known infectious period)</p>
+<p><strong><span style="color: blue;">Solution:</span></strong> Use additional information (e.g., known infectious period)</p>
 </section></section>
 <section>
 <section id="part-iii-least-squares-estimation" class="title-slide slide level1 center">
@@ -589,7 +589,7 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </section>
 <section id="least-squares-the-intuitive-approach" class="slide level2">
 <h2>Least Squares: The Intuitive Approach</h2>
-<p><strong>Core Idea:</strong> Minimize the sum of squared differences between model predictions and observations</p>
+<p><strong><span style="color: blue;">Core Idea:</span></strong> Minimize the sum of squared differences between model predictions and observations</p>
 </section>
 <section class="slide level2">
 
@@ -604,21 +604,21 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 <section class="slide level2">
 
 <h3 id="why-squared-errors">Why Squared Errors?</h3>
-<p><strong>Advantages:</strong></p>
+<p><strong><span style="color: blue;">Advantages:</span></strong></p>
 <ul>
-<li>Penalizes large errors more heavily</li>
-<li>Differentiable (smooth optimization)</li>
-<li>Mathematically tractable</li>
-<li>Gives maximum likelihood estimates when errors are normal distributed</li>
+<li><span style="color: blue;">Penalizes large errors more heavily</span></li>
+<li><span style="color: blue;">Differentiable (smooth optimization)</span></li>
+<li><span style="color: blue;">Mathematically tractable</span></li>
+<li><span style="color: blue;">Gives maximum likelihood estimates when errors are normal distributed</span></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<h3 id="disadvantages">Disadvantages</h3>
+<h3 id="disadvantages"><span style="color: tomato;">Disadvantages</span></h3>
 <ul>
-<li>Sensitive to outliers</li>
-<li>Assumes constant variance</li>
-<li>No probabilistic interpretation</li>
+<li><span style="color: tomato;">Sensitive to outliers</span></li>
+<li><span style="color: tomato;">Assumes constant variance</span></li>
+<li><span style="color: tomato;">No probabilistic interpretation</span></li>
 </ul>
 </section>
 <section id="least-squares-example-sir-model" class="slide level2">
@@ -802,7 +802,7 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </section>
 <section id="maximum-likelihood-the-probabilistic-approach" class="slide level2">
 <h2>Maximum Likelihood: The Probabilistic Approach</h2>
-<p><strong>Core Idea:</strong> Find parameter values that make the observed data most probable</p>
+<p><strong><span style="color: blue;">Core Idea:</span></strong> Find parameter values that make the observed data most probable</p>
 <p><strong>Mathematical Formulation:</strong> <span class="math display">\[\hat{\theta} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \prod_{i=1}^{n} f(y_i | \theta)\]</span></p>
 <p>Where: - <span class="math inline">\(L(\theta)\)</span> = likelihood function - <span class="math inline">\(f(y_i | \theta)\)</span> = probability density of observation <span class="math inline">\(i\)</span></p>
 </section>
@@ -812,22 +812,22 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </section>
 <section id="why-maximum-likelihood" class="slide level2">
 <h2>Why Maximum Likelihood?</h2>
-<p><strong>Theoretical Advantages:</strong></p>
+<p><strong><span style="color: blue;">Theoretical Advantages:</span></strong></p>
 <ul>
-<li>Principled statistical framework</li>
-<li>Provides uncertainty quantification</li>
-<li>Enables model comparison (AIC, BIC)</li>
-<li>Asymptotically optimal properties</li>
+<li><span style="color: blue;">Principled statistical framework</span></li>
+<li><span style="color: blue;">Provides uncertainty quantification</span></li>
+<li><span style="color: blue;">Enables model comparison (AIC, BIC)</span></li>
+<li><span style="color: blue;">Asymptotically optimal properties</span></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<p><strong>Practical Benefits:</strong></p>
+<p><strong><span style="color: tomato;">Practical Benefits:</span></strong></p>
 <ul>
-<li>Confidence intervals</li>
-<li>Hypothesis testing</li>
-<li>Model selection</li>
-<li>Incorporates different error structures</li>
+<li><span style="color: tomato;">Confidence intervals</span></li>
+<li><span style="color: tomato;">Hypothesis testing</span></li>
+<li><span style="color: tomato;">Model selection</span></li>
+<li><span style="color: tomato;">Incorporates different error structures</span></li>
 </ul>
 </section>
 <section id="choosing-a-probability-distribution" class="slide level2">
@@ -1139,7 +1139,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="beyond-least-squares-and-mle" class="slide level2">
 <h2>Beyond Least Squares and MLE</h2>
-<p><strong>Why We Need Advanced Methods:</strong></p>
+<p><strong><span style="color: tomato;">Why We Need Advanced Methods:</span></strong></p>
 <ul>
 <li>Parameter identifiability issues</li>
 <li>Complex error structures</li>
@@ -1159,7 +1159,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="bayesian-methods-mcmc" class="slide level2">
 <h2>Bayesian Methods: MCMC</h2>
-<p><strong>Core Idea:</strong> Treat parameters as random variables with prior distributions</p>
+<p><strong><span style="color: blue;">Core Idea:</span></strong> Treat parameters as random variables with prior distributions</p>
 <p><strong>Bayes’ Theorem:</strong> <span class="math display">\[P(\theta | \mathbf{y}) = \frac{P(\mathbf{y} | \theta) P(\theta)}{P(\mathbf{y})}\]</span></p>
 </section>
 <section id="advantages" class="slide level2">
@@ -1210,7 +1210,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="particle-filtering" class="slide level2">
 <h2>Particle Filtering</h2>
-<p><strong>Core Idea:</strong> Sequential Monte Carlo method for state-space models</p>
+<p><strong><span style="color: blue;">Core Idea:</span></strong> Sequential Monte Carlo method for state-space models</p>
 <p><strong>When to Use:</strong></p>
 <ul>
 <li>Real-time parameter estimation</li>
@@ -1256,7 +1256,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="approximate-bayesian-computation-abc" class="slide level2">
 <h2>Approximate Bayesian Computation (ABC)</h2>
-<p><strong>Core Idea:</strong> Approximate posterior without likelihood evaluation</p>
+<p><strong><span style="color: blue;">Core Idea:</span></strong> Approximate posterior without likelihood evaluation</p>
 <p><strong>When to Use:</strong></p>
 <ul>
 <li>Complex likelihoods</li>
@@ -1287,7 +1287,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="ensemble-methods" class="slide level2">
 <h2>Ensemble Methods</h2>
-<p><strong>Core Idea:</strong> Combine multiple models or methods</p>
+<p><strong><span style="color: blue;">Core Idea:</span></strong> Combine multiple models or methods</p>
 <p><strong>Types:</strong></p>
 <ul>
 <li><strong>Model Ensembles</strong>: Average predictions from different models</li>
@@ -1461,11 +1461,11 @@ Comparison with True Values:</code></pre>
 <p><strong>For Complex Models:</strong> Bayesian Methods</p>
 <p><strong>For Real-time:</strong> Particle Filtering</p>
 <p><strong>For Model Comparison:</strong> ABC or MCMC</p>
-<p><strong>General Principle:</strong> Start simple, add complexity as needed</p>
+<p><strong><span style="color: tomato;">General Principle:</span></strong> Start simple, add complexity as needed</p>
 </section>
 <section id="final-thoughts" class="slide level2">
 <h2>Final Thoughts</h2>
-<p><strong>Model fitting is both art and science:</strong></p>
+<p><strong><span style="color: tomato;">Model fitting is both art and science:</span></strong></p>
 <ul>
 <li>Requires domain expertise</li>
 <li>Demands statistical rigor</li>
@@ -1475,7 +1475,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section class="slide level2">
 
-<p><strong>The goal is not just to fit models, but to:</strong></p>
+<p><strong><span style="color: blue;">The goal is not just to fit models, but to:</span></strong></p>
 <ul>
 <li>Understand disease dynamics</li>
 <li>Make reliable predictions</li>
@@ -1906,7 +1906,7 @@ Comparison with True Values:</code></pre>
       }
     });
     </script>
-    <script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});</script>
+    <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});</script>
     
 
 </body></html>
