@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Model Fitting and Calibration"
-subtitle: "Compartmental Models in Epidemiology"
+subtitle: "Modelling for Pandemic Preparedness and Response Modular Shortcourse, 2025"
 author:
   - name: "James Mba Azam, PhD"
     orcid: 0000-0001-5782-7330
