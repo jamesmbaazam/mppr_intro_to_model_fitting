@@ -42,12 +42,12 @@ editor_options:
 
 By the end of this lecture, you will be able to:
 
--   Understand the fundamental concepts of model fitting and calibration
--   Apply least squares estimation to compartmental models
--   Implement maximum likelihood estimation for epidemic models
--   Compare the strengths and weaknesses of different fitting methods
--   Recognize when to use advanced methods like MCMC and particle filtering
--   Troubleshoot common fitting problems
+-   Understand the <span style="color: tomato;">fundamental concepts</span> of <span style="color: tomato;">model fitting</span> and <span style="color: tomato;">calibration</span>
+-   Apply <span style="color: tomato;">least squares estimation</span> to <span style="color: tomato;">compartmental models</span>
+-   Implement <span style="color: tomato;">maximum likelihood estimation</span> for <span style="color: tomato;">epidemic models</span>
+-   Compare the <span style="color: tomato;">strengths and weaknesses</span> of different <span style="color: tomato;">fitting methods</span>
+-   Recognize when to use <span style="color: tomato;">advanced methods</span> like <span style="color: tomato;">MCMC</span> and <span style="color: tomato;">particle filtering</span>
+-   <span style="color: tomato;">Troubleshoot</span> common <span style="color: tomato;">fitting problems</span>
 
 # Part I: Introduction & Motivation
 
@@ -1128,6 +1128,60 @@ pf <- pfilter(sir_pomp, Np = 1000, params = c(beta = 0.3, gamma = 0.1, sigma = 1
 Any Questions?
 :::
 
+## Resources
+
+### Full courses (free)
+
+- Model fitting and inference for infectious disease dynamics by Sebastian Funk, Anton Camacho, Helen Johnson, Amanda Minter, Kathleen O’Reilly and Nicholas Davies. [Link](https://sbfnk.github.io/mfiidd/index.html)
+
+------------------------------------------------------------------------
+
+### Core concepts
+
+- [Introduction to the Concept of Likelihood and Its Applications](https://journals.sagepub.com/doi/10.1177/2515245917744314)
+- _Key considerations for model fitting and calibration_: [Choices and trade-offs in inference with infectious disease models](https://www.sciencedirect.com/science/article/pii/S1755436519300441?via%3Dihub)
+
+------------------------------------------------------------------------
+
+### Least squares
+
+- _Key tutorial on the least squares method_: [Fitting dynamic models to epidemic outbreaks with quantified uncertainty: A primer for parameter uncertainty, identifiability, and forecasts](https://www.sciencedirect.com/science/article/pii/S2468042717300234)
+- [Fitting Epidemic Models to Data by James Holland Jones](https://web.stanford.edu/class/earthsys214/notes/fit.html)
+
+------------------------------------------------------------------------
+
+### MLE
+
+- [Fitting Epidemic Models to Data by James Holland Jones](https://web.stanford.edu/class/earthsys214/notes/fit.html)
+- _R tutorial on MLE_: [Estimating model parameters by maximum likelihood](https://daphnia.ecology.uga.edu/drakelab/wp-content/uploads/2014/07/likelihood.pdf)
+
+------------------------------------------------------------------------
+
+### MCMC
+
+- [Markov Chain Monte Carlo: an introduction for  epidemiologists](10.1093/ije/dyt043)
+- [A simple introduction to Markov Chain Monte–Carlo sampling](10.3758/s13423-016-1015-8)
+
+------------------------------------------------------------------------
+
+### pMCMC
+
+- [Introduction to particle Markov-chain Monte Carlo for disease dynamics  modellers](https://www.sciencedirect.com/science/article/pii/S1755436519300301)
+
+------------------------------------------------------------------------
+
+### ABC
+
+- [Approximate Bayesian Computation for infectious disease modelling]([10.1016/j.epidem.2019.100368](https://doi.org/10.1016/j.epidem.2019.100368)) 
+
+------------------------------------------------------------------------
+
+### Others 
+
+- [Bayesian workflow for disease transmission modeling in Stan](https://mc-stan.org/learn-stan/case-studies/boarding_school_case_study.html)
+- [POMP](https://kingaa.github.io/pomp/vignettes/getting_started.html)
+
+    
 ## References
 
 -   Anderson, R.M. and May, R.M. (1991). *Infectious Diseases of Humans: Dynamics and Control*. Oxford University Press.
