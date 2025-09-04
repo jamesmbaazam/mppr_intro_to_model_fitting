@@ -61,15 +61,15 @@ By the end of this lecture, you will be able to:
 
 -   We have mathematical models (e.g., SIR, SEIR)
 -   We have real-world data (case counts, hospitalizations)
--   **How do we connect them?**
+-   **<span style="color: tomato;">How do we connect them?</span>**
 
 ------------------------------------------------------------------------
 
 ### The Goal
 
--   Find parameter values that make our model predictions match observed data
--   Quantify uncertainty in our estimates
--   Make reliable predictions and policy recommendations
+-   <span style="color: blue;">Find parameter values that make our model predictions match observed data</span>
+-   <span style="color: blue;">Quantify uncertainty in our estimates</span>
+-   <span style="color: blue;">Make reliable predictions and policy recommendations</span>
 
 ------------------------------------------------------------------------
 
@@ -110,25 +110,25 @@ legend("topright", c("Observed", "True Model"),
        col = c("red", "blue"), pch = c(16, NA), lty = c(NA, 1))
 ```
 
-**Question:** How do we estimate $\beta$ and $\gamma$ from this noisy data?
+**<span style="color: tomato;">Question:</span>** How do we estimate $\beta$ and $\gamma$ from this noisy data?
 
 ## Types of Fitting Methods
 
 ### Deterministic Methods
 
--   Least Squares
--   Maximum Likelihood Estimation (MLE)
+-   **<span style="color: tomato;">Least Squares</span>**
+-   **<span style="color: tomato;">Maximum Likelihood Estimation (MLE)</span>**
 
 ------------------------------------------------------------------------
 
 ### Stochastic Methods
 
--   Markov Chain Monte Carlo (MCMC)
--   Sequential Monte Carlo (SMC)
--   Particle MCMC (pMCMC)
--   Approximate Bayesian Computation (ABC)
+-   **<span style="color: blue;">Markov Chain Monte Carlo (MCMC)</span>**
+-   **<span style="color: blue;">Sequential Monte Carlo (SMC)</span>**
+-   **<span style="color: blue;">Particle MCMC (pMCMC)</span>**
+-   **<span style="color: blue;">Approximate Bayesian Computation (ABC)</span>**
 
-**Today's Focus:** Least Squares and MLE as foundations
+**<span style="color: tomato;">Today's Focus:</span>** Least Squares and MLE as foundations
 
 # Part II: Conceptual Foundations
 
@@ -136,7 +136,7 @@ legend("topright", c("Observed", "True Model"),
 
 ## What is Model Fitting?
 
-**Definition:** The process of finding parameter values that make a mathematical model's predictions as close as possible to observed data.
+**<span style="color: blue;">Definition:</span>** The process of finding parameter values that make a mathematical model's predictions as close as possible to observed data.
 
 ------------------------------------------------------------------------
 
@@ -162,15 +162,15 @@ $$\frac{dS}{dt} = -\beta SI$$ $$\frac{dI}{dt} = \beta SI - \gamma I$$ $$\frac{dR
 
 ### Parameters to Estimate
 
--   $\beta$ = transmission rate
--   $\gamma$ = recovery rate
+-   <span style="color: tomato;">$\beta$ = transmission rate</span>
+-   <span style="color: tomato;">$\gamma$ = recovery rate</span>
 
 ------------------------------------------------------------------------
 
 ## Key Quantities
 
--   $R_0 = \frac{\beta}{\gamma}$ (basic reproduction number)
--   Infectious period = $\frac{1}{\gamma}$
+-   <span style="color: blue;">$R_0 = \frac{\beta}{\gamma}$ (basic reproduction number)</span>
+-   <span style="color: blue;">Infectious period = $\frac{1}{\gamma}$</span>
 
 ------------------------------------------------------------------------
 
@@ -207,7 +207,7 @@ $$\frac{dS}{dt} = -\beta SI$$ $$\frac{dI}{dt} = \beta SI - \gamma I$$ $$\frac{dR
 
 ## The Fitting Challenge
 
-**Identifiability Problem:** Multiple parameter combinations can produce similar model outputs
+**<span style="color: tomato;">Identifiability Problem:</span>** Multiple parameter combinations can produce similar model outputs
 
 **Example:**
 
@@ -216,7 +216,7 @@ $$\frac{dS}{dt} = -\beta SI$$ $$\frac{dI}{dt} = \beta SI - \gamma I$$ $$\frac{dR
 
 Both might give similar epidemic curves!
 
-**Solution:** Use additional information (e.g., known infectious period)
+**<span style="color: blue;">Solution:</span>** Use additional information (e.g., known infectious period)
 
 # Part III: Least Squares Estimation
 
@@ -224,7 +224,7 @@ Both might give similar epidemic curves!
 
 ## Least Squares: The Intuitive Approach
 
-**Core Idea:** Minimize the sum of squared differences between model predictions and observations
+**<span style="color: blue;">Core Idea:</span>** Minimize the sum of squared differences between model predictions and observations
 
 ------------------------------------------------------------------------
 
@@ -240,20 +240,20 @@ Where:
 
 ### Why Squared Errors?
 
-**Advantages:**
+**<span style="color: blue;">Advantages:</span>**
 
--   Penalizes large errors more heavily
--   Differentiable (smooth optimization)
--   Mathematically tractable
--   Gives maximum likelihood estimates when errors are normal distributed
+-   <span style="color: blue;">Penalizes large errors more heavily</span>
+-   <span style="color: blue;">Differentiable (smooth optimization)</span>
+-   <span style="color: blue;">Mathematically tractable</span>
+-   <span style="color: blue;">Gives maximum likelihood estimates when errors are normal distributed</span>
 
 ------------------------------------------------------------------------
 
-### Disadvantages
+### <span style="color: tomato;">Disadvantages</span>
 
--   Sensitive to outliers
--   Assumes constant variance
--   No probabilistic interpretation
+-   <span style="color: tomato;">Sensitive to outliers</span>
+-   <span style="color: tomato;">Assumes constant variance</span>
+-   <span style="color: tomato;">No probabilistic interpretation</span>
 
 ------------------------------------------------------------------------
 
@@ -458,7 +458,7 @@ for(i in 2:nrow(param_combos)) {
 
 ## Maximum Likelihood: The Probabilistic Approach
 
-**Core Idea:** Find parameter values that make the observed data most probable
+**<span style="color: blue;">Core Idea:</span>** Find parameter values that make the observed data most probable
 
 **Mathematical Formulation:** $$\hat{\theta} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \prod_{i=1}^{n} f(y_i | \theta)$$
 
@@ -472,21 +472,21 @@ Where: - $L(\theta)$ = likelihood function - $f(y_i | \theta)$ = probability den
 
 ## Why Maximum Likelihood?
 
-**Theoretical Advantages:**
+**<span style="color: blue;">Theoretical Advantages:</span>**
 
--   Principled statistical framework
--   Provides uncertainty quantification
--   Enables model comparison (AIC, BIC)
--   Asymptotically optimal properties
+-   <span style="color: blue;">Principled statistical framework</span>
+-   <span style="color: blue;">Provides uncertainty quantification</span>
+-   <span style="color: blue;">Enables model comparison (AIC, BIC)</span>
+-   <span style="color: blue;">Asymptotically optimal properties</span>
 
 ------------------------------------------------------------------------
 
-**Practical Benefits:**
+**<span style="color: tomato;">Practical Benefits:</span>**
 
--   Confidence intervals
--   Hypothesis testing
--   Model selection
--   Incorporates different error structures
+-   <span style="color: tomato;">Confidence intervals</span>
+-   <span style="color: tomato;">Hypothesis testing</span>
+-   <span style="color: tomato;">Model selection</span>
+-   <span style="color: tomato;">Incorporates different error structures</span>
 
 ------------------------------------------------------------------------
 
@@ -771,7 +771,7 @@ cat("Delta AIC:", AIC(fit_nb) - AIC(fit_mle), "\n")
 
 ## Beyond Least Squares and MLE
 
-**Why We Need Advanced Methods:**
+**<span style="color: tomato;">Why We Need Advanced Methods:</span>**
 
 -   Parameter identifiability issues
 -   Complex error structures
@@ -792,7 +792,7 @@ cat("Delta AIC:", AIC(fit_nb) - AIC(fit_mle), "\n")
 
 ## Bayesian Methods: MCMC
 
-**Core Idea:** Treat parameters as random variables with prior distributions
+**<span style="color: blue;">Core Idea:</span>** Treat parameters as random variables with prior distributions
 
 **Bayes' Theorem:** $$P(\theta | \mathbf{y}) = \frac{P(\mathbf{y} | \theta) P(\theta)}{P(\mathbf{y})}$$
 
@@ -848,7 +848,7 @@ model {
 
 ## Particle Filtering
 
-**Core Idea:** Sequential Monte Carlo method for state-space models
+**<span style="color: blue;">Core Idea:</span>** Sequential Monte Carlo method for state-space models
 
 **When to Use:**
 
@@ -898,7 +898,7 @@ pf <- pfilter(sir_pomp, Np = 1000, params = c(beta = 0.3, gamma = 0.1, sigma = 1
 
 ## Approximate Bayesian Computation (ABC)
 
-**Core Idea:** Approximate posterior without likelihood evaluation
+**<span style="color: blue;">Core Idea:</span>** Approximate posterior without likelihood evaluation
 
 **When to Use:**
 
@@ -929,7 +929,7 @@ pf <- pfilter(sir_pomp, Np = 1000, params = c(beta = 0.3, gamma = 0.1, sigma = 1
 
 ## Ensemble Methods
 
-**Core Idea:** Combine multiple models or methods
+**<span style="color: blue;">Core Idea:</span>** Combine multiple models or methods
 
 **Types:**
 
@@ -1100,13 +1100,13 @@ pf <- pfilter(sir_pomp, Np = 1000, params = c(beta = 0.3, gamma = 0.1, sigma = 1
 
 **For Model Comparison:** ABC or MCMC
 
-**General Principle:** Start simple, add complexity as needed
+**<span style="color: tomato;">General Principle:</span>** Start simple, add complexity as needed
 
 ------------------------------------------------------------------------
 
 ## Final Thoughts
 
-**Model fitting is both art and science:**
+**<span style="color: tomato;">Model fitting is both art and science:</span>**
 
 -   Requires domain expertise
 -   Demands statistical rigor
@@ -1115,7 +1115,7 @@ pf <- pfilter(sir_pomp, Np = 1000, params = c(beta = 0.3, gamma = 0.1, sigma = 1
 
 ------------------------------------------------------------------------
 
-**The goal is not just to fit models, but to:**
+**<span style="color: blue;">The goal is not just to fit models, but to:</span>**
 
 -   Understand disease dynamics
 -   Make reliable predictions
