@@ -452,6 +452,12 @@ for(i in 2:nrow(param_combos)) {
 }
 ```
 
+------------------------------------------------------------------------
+
+## R implementation practicals {background-color="#447099" transition="fade-in"}
+
+- Let's turn to the [tutorials](https://github.com/jamesmbaazam/mppr_intro_to_fitting_practicals)
+
 # Part IV: Maximum Likelihood Estimation
 
 ------------------------------------------------------------------------
