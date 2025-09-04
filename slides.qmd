@@ -658,6 +658,12 @@ cat("Delta AIC:", AIC(fit_nb) - AIC(fit_mle), "\n")
 -   Profile likelihood can be computationally expensive
 -   May not converge for complex models
 
+------------------------------------------------------------------------
+
+## R implementation practicals {background-color="#447099" transition="fade-in"}
+
+- Let's turn to the [tutorials](https://github.com/jamesmbaazam/mppr_intro_to_fitting_practicals)
+
 # Part V: Comparison of Methods
 
 ------------------------------------------------------------------------
