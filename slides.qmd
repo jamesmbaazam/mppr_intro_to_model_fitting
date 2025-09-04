@@ -1,28 +1,24 @@
 ---
-title: "Introduction to model fitting and calibration"
-subtitle: "Modelling for Pandemic Preparedness and Response Modular Shortcourse, 2025"
+title: "Introduction to Model Fitting and Calibration"
+subtitle: "Compartmental Models in Epidemiology"
 author:
   - name: "James Mba Azam, PhD"
     orcid: 0000-0001-5782-7330
     email: james.azam@lshtm.ac.uk
-    affiliation: 
+    affiliation:
       - name: London School of Hygiene and Tropical Medicine, UK
         city: London, United Kingdom
 date: "last-modified"
 license: "CC BY"
-copyright: 
+copyright:
   holder: James Mba Azam
   year: 2025
 execute:
   echo: true
+  cache: true
+  message: false
+  warning: false
   freeze: auto
-# format:
-#   beamer:
-#     navigation: horizontal
-#     theme: metropolis
-#     institute: London School of Hygiene and Tropical Medicine, UK
-#     orcid: 0000-0001-5782-7330
-#     email: james.azam@lshtm.ac.uk
 format:
   revealjs:
     theme: [solarized]
@@ -31,26 +27,1111 @@ format:
     chalkboard: true
     toc: true
     toc-depth: 1
-transition: fade
-lightbox: true
-progress: true
-code-copy: true
-# revealjs-plugins:
-bibliography: references.bib
+    transition: fade
+    lightbox: true
+    progress: true
+    code-copy: true
+# bibliography: references.bib
 link-citations: true
 engine: knitr
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
-## Some title
+## Learning Objectives
 
-Talk outline:
+By the end of this lecture, you will be able to:
 
-## Slide 1
+-   Understand the fundamental concepts of model fitting and calibration
+-   Apply least squares estimation to compartmental models
+-   Implement maximum likelihood estimation for epidemic models
+-   Compare the strengths and weaknesses of different fitting methods
+-   Recognize when to use advanced methods like MCMC and particle filtering
+-   Troubleshoot common fitting problems
 
-Some content
+# Part I: Introduction & Motivation
 
-## Slide 2
+------------------------------------------------------------------------
 
-Some more content
+## Why Model Fitting Matters
+
+### The Challenge
+
+**The Challenge:**
+
+-   We have mathematical models (e.g., SIR, SEIR)
+-   We have real-world data (case counts, hospitalizations)
+-   **How do we connect them?**
+
+------------------------------------------------------------------------
+
+### The Goal
+
+-   Find parameter values that make our model predictions match observed data
+-   Quantify uncertainty in our estimates
+-   Make reliable predictions and policy recommendations
+
+------------------------------------------------------------------------
+
+## Example: Outbreak data
+
+```{r covid-example, echo=FALSE, fig.width=10, fig.height=6}
+# Simulate COVID-19-like data
+set.seed(123)
+days <- 1:100
+true_beta <- 0.3
+true_gamma <- 0.1
+true_R0 <- true_beta / true_gamma
+
+# SIR model simulation
+sir_sim <- function(t, y, params) {
+  with(as.list(c(y, params)), {
+    dS <- -beta * S * I
+    dI <- beta * S * I - gamma * I
+    dR <- gamma * I
+    list(c(dS, dI, dR))
+  })
+}
+
+library(deSolve)
+out <- ode(y = c(S = 0.99, I = 0.01, R = 0),
+           times = days,
+           func = sir_sim,
+           parms = c(beta = true_beta, gamma = true_gamma))
+
+# Add noise to simulate real data
+observed_cases <- rpois(length(days), out[,"I"] * 1000 + 10)
+
+plot(days, observed_cases, pch = 16, col = "red",
+     xlab = "Days", ylab = "Daily Cases",
+     main = "Outbreak Data")
+lines(days, out[,"I"] * 1000, col = "blue", lwd = 2)
+legend("topright", c("Observed", "True Model"),
+       col = c("red", "blue"), pch = c(16, NA), lty = c(NA, 1))
+```
+
+**Question:** How do we estimate $\beta$ and $\gamma$ from this noisy data?
+
+## Types of Fitting Methods
+
+### Deterministic Methods
+
+-   Least Squares
+-   Maximum Likelihood Estimation (MLE)
+
+------------------------------------------------------------------------
+
+### Stochastic Methods
+
+-   Markov Chain Monte Carlo (MCMC)
+-   Sequential Monte Carlo (SMC)
+-   Particle MCMC (pMCMC)
+-   Approximate Bayesian Computation (ABC)
+
+**Today's Focus:** Least Squares and MLE as foundations
+
+# Part II: Conceptual Foundations
+
+------------------------------------------------------------------------
+
+## What is Model Fitting?
+
+**Definition:** The process of finding parameter values that make a mathematical model's predictions as close as possible to observed data.
+
+------------------------------------------------------------------------
+
+## Mathematical Formulation
+
+$$\hat{\theta} = \arg\min_{\theta} \mathcal{L}(\theta, \mathbf{y})$$
+
+Where:
+
+-   $\theta$ = parameter vector (e.g., $\beta, \gamma$)
+-   $\mathbf{y}$ = observed data
+-   $\mathcal{L}$ = loss/objective function
+
+------------------------------------------------------------------------
+
+## The SIR Model as Our Example
+
+**Differential Equations:**
+
+$$\frac{dS}{dt} = -\beta SI$$ $$\frac{dI}{dt} = \beta SI - \gamma I$$ $$\frac{dR}{dt} = \gamma I$$
+
+------------------------------------------------------------------------
+
+### Parameters to Estimate
+
+-   $\beta$ = transmission rate
+-   $\gamma$ = recovery rate
+
+------------------------------------------------------------------------
+
+## Key Quantities
+
+-   $R_0 = \frac{\beta}{\gamma}$ (basic reproduction number)
+-   Infectious period = $\frac{1}{\gamma}$
+
+------------------------------------------------------------------------
+
+## Sources of Uncertainty
+
+### Model Uncertainty
+
+-   Wrong model structure
+-   Missing compartments or processes
+
+------------------------------------------------------------------------
+
+### Parameter Uncertainty
+
+-   True parameter values unknown
+-   Multiple parameter sets give similar fits
+
+------------------------------------------------------------------------
+
+### Observation Uncertainty
+
+-   Measurement error
+-   Reporting delays
+-   Underreporting
+
+------------------------------------------------------------------------
+
+### Process Uncertainty
+
+-   Stochasticity in disease transmission
+-   Environmental variability
+
+------------------------------------------------------------------------
+
+## The Fitting Challenge
+
+**Identifiability Problem:** Multiple parameter combinations can produce similar model outputs
+
+**Example:**
+
+-   High $\beta$, high $\gamma$
+-   Low $\beta$, low $\gamma$
+
+Both might give similar epidemic curves!
+
+**Solution:** Use additional information (e.g., known infectious period)
+
+# Part III: Least Squares Estimation
+
+------------------------------------------------------------------------
+
+## Least Squares: The Intuitive Approach
+
+**Core Idea:** Minimize the sum of squared differences between model predictions and observations
+
+------------------------------------------------------------------------
+
+**Mathematical Formulation:** $$\text{SSE} = \sum_{i=1}^{n} (y_i - f(t_i, \theta))^2$$
+
+Where:
+
+- $y_i$ = observed value at time $t_i$
+- $f(t_i, \theta)$ = model prediction at time $t_i$
+- $\theta$ = parameter vector
+
+------------------------------------------------------------------------
+
+### Why Squared Errors?
+
+**Advantages:**
+
+-   Penalizes large errors more heavily
+-   Differentiable (smooth optimization)
+-   Mathematically tractable
+-   Gives maximum likelihood estimates when errors are normal distributed
+
+------------------------------------------------------------------------
+
+### Disadvantages
+
+-   Sensitive to outliers
+-   Assumes constant variance
+-   No probabilistic interpretation
+
+------------------------------------------------------------------------
+
+## Least Squares Example: SIR Model
+
+```{r ls-example, echo=FALSE, fig.width=10, fig.height=6}
+# Load required packages
+library(deSolve)
+library(ggplot2)
+
+# Define SIR model
+sir_model <- function(t, y, params) {
+  with(as.list(c(y, params)), {
+    dS <- -beta * S * I
+    dI <- beta * S * I - gamma * I
+    dR <- gamma * I
+    list(c(dS, dI, dR))
+  })
+}
+
+# Generate synthetic data
+set.seed(42)
+true_params <- c(beta = 0.3, gamma = 0.1)
+init_conds <- c(S = 0.99, I = 0.01, R = 0)
+times <- seq(0, 365, by = 1)
+
+# Simulate true model
+out <- ode(y = init_conds, times = times, func = sir_model, parms = true_params)
+true_cases <- out[,"I"] * 1000  # Scale to cases
+
+# Add noise
+observed_cases <- rpois(length(times), true_cases + 5)
+
+# Plot
+plot_data <- data.frame(
+  time = times,
+  observed = observed_cases,
+  true_model = true_cases
+)
+
+ggplot(plot_data, aes(x = time)) +
+  geom_point(aes(y = observed), color = "red", alpha = 0.7) +
+  geom_line(aes(y = true_model), color = "blue", size = 1) +
+  labs(x = "Time (days)", y = "Number of Cases",
+       title = "SIR Model: True vs Observed Data") +
+  theme_minimal()
+```
+
+------------------------------------------------------------------------
+
+## Implementing Least Squares
+
+```{r ls-implementation, echo=TRUE}
+# Define objective function
+sse_function <- function(params, data) {
+  beta <- params[1]
+  gamma <- params[2]
+  
+  # Simulate model
+  out <- ode(
+    y = init_conds,
+    times = data$time,
+    func = sir_model,
+    parms = c(beta = beta, gamma = gamma)
+  )
+  
+  # Calculate sum of squared errors
+  predicted <- out[, "I"] * 1000
+  sse <- sum((data$observed - predicted)^2)
+  
+  return(sse)
+}
+
+# Prepare data
+data <- data.frame(time = times, observed = observed_cases)
+
+# Test different parameter values
+test_params <- expand.grid(
+  beta = seq(0.1, 0.5, length.out = 10),
+  gamma = seq(0.05, 0.2, length.out = 10)
+)
+
+# Calculate SSE for each combination
+for(i in 1:nrow(test_params)){
+  test_params$sse[i] <- sse_function(
+    c(
+      test_params[i, 1],
+      test_params[i, 2]
+    ),
+    data
+  )
+}
+
+# Find minimum
+best_idx <- which.min(test_params$sse)
+best_params <- test_params[best_idx, ]
+cat("True parameters: Beta =", true_params[1], ", Gamma =", true_params[2])
+cat("Best fit parameters: Beta =", round(best_params$beta, 3), ", Gamma =", round(best_params$gamma, 3), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Strengths of Least Squares
+
+**Computational Advantages:**
+
+-   Fast and efficient
+-   Well-established algorithms
+-   Easy to implement
+-   Good for initial parameter estimates
+
+------------------------------------------------------------------------
+
+## Statistical Properties
+
+-   Unbiased estimates (under certain conditions)
+-   Minimum variance among linear unbiased estimators
+-   Maximum likelihood when errors are normal
+
+------------------------------------------------------------------------
+
+## Practical Benefits
+
+-   Intuitive interpretation
+-   Widely understood
+-   Good starting point for more complex methods
+
+------------------------------------------------------------------------
+
+## Limitations of Least Squares
+
+**Statistical Limitations:**
+
+-   Limited uncertainty quantification
+-   Assumes constant variance
+-   Sensitive to outliers
+-   No probabilistic framework
+
+------------------------------------------------------------------------
+
+## Practical Limitations
+
+**Practical Limitations:**
+
+-   Parameter identifiability issues
+-   No confidence intervals
+-   Difficult to compare models
+-   Assumes measurement error only
+
+------------------------------------------------------------------------
+
+## Example Problem
+
+```{r ls-limitation, echo=TRUE, fig.width=10, fig.height=6}
+# Show how different parameter combinations can give similar fits
+param_combos <- data.frame(
+  beta = c(0.25, 0.35, 0.30),
+  gamma = c(0.08, 0.12, 0.10),
+  label = c("Low β, Low γ", "High β, High γ", "True")
+)
+
+# Plot different fits
+ggplot(plot_data, aes(x = time)) +
+  geom_point(aes(y = observed), color = "red", alpha = 0.7) +
+  geom_line(aes(y = true_model), color = "blue", linetype = 1) +
+  labs(x = "Time (days)", y = "Number of Cases",
+       title = "Multiple Parameter Sets Can Give Similar Fits") +
+  theme_minimal()
+
+# Add lines for different parameter combinations
+out_test <- ode(
+    y = init_conds,
+    times = times,
+    func = sir_model,
+    parms = c(beta = param_combos$beta[1],
+              gamma = param_combos$gamma[1]
+    ))
+
+plot(times, out_test[, "I"] * 1000,
+     col = c("green", "orange", "purple")[1],
+     lty = 2, lwd = 2
+)
+
+for(i in 2:nrow(param_combos)) {
+  out_test <- ode(
+    y = init_conds,
+    times = times,
+    func = sir_model,
+    parms = c(beta = param_combos$beta[i],
+              gamma = param_combos$gamma[i]
+    ))
+  lines(times, out_test[, "I"] * 1000,
+        col = c("green", "orange", "purple")[i],
+        lty = 2, lwd = 2
+  )
+}
+```
+
+# Part IV: Maximum Likelihood Estimation
+
+------------------------------------------------------------------------
+
+## Maximum Likelihood: The Probabilistic Approach
+
+**Core Idea:** Find parameter values that make the observed data most probable
+
+**Mathematical Formulation:** $$\hat{\theta} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \prod_{i=1}^{n} f(y_i | \theta)$$
+
+Where: - $L(\theta)$ = likelihood function - $f(y_i | \theta)$ = probability density of observation $i$
+
+------------------------------------------------------------------------
+
+**In Practice:** Maximize log-likelihood $$\hat{\theta} = \arg\max_{\theta} \ell(\theta) = \arg\max_{\theta} \sum_{i=1}^{n} \log f(y_i | \theta)$$
+
+------------------------------------------------------------------------
+
+## Why Maximum Likelihood?
+
+**Theoretical Advantages:**
+
+-   Principled statistical framework
+-   Provides uncertainty quantification
+-   Enables model comparison (AIC, BIC)
+-   Asymptotically optimal properties
+
+------------------------------------------------------------------------
+
+**Practical Benefits:**
+
+-   Confidence intervals
+-   Hypothesis testing
+-   Model selection
+-   Incorporates different error structures
+
+------------------------------------------------------------------------
+
+## Choosing a Probability Distribution
+
+**For Count Data (Cases):**
+
+-   **Poisson**: $Y_i \sim \text{Poisson}(\lambda_i)$
+-   **Negative Binomial**: $Y_i \sim \text{NB}(\mu_i, \phi)$
+
+------------------------------------------------------------------------
+
+## Choosing a Probability Distribution
+
+**For Continuous Data:**
+
+-   **Normal**: $Y_i \sim N(\mu_i, \sigma^2)$
+-   **Log-normal**: $\log Y_i \sim N(\log \mu_i, \sigma^2)$
+
+**For Our SIR Example:** We'll use Poisson since we're modeling case counts
+
+------------------------------------------------------------------------
+
+## MLE Implementation: Poisson Likelihood
+
+```{r mle-implementation, echo=TRUE}
+# Define negative log-likelihood function
+nll_function <- function(beta, gamma, data) {
+  # Simulate model
+  out <- ode(y = init_conds, times = data$time,
+             func = sir_model, parms = c(beta = beta, gamma = gamma))
+
+  # Model predictions (scaled to cases)
+  predicted <- out[,"I"] * 1000
+
+  # Poisson negative log-likelihood
+  nll <- -sum(dpois(data$observed, lambda = predicted, log = TRUE))
+
+  return(nll)
+}
+
+# Use optimization to find MLE
+library(bbmle)
+fit_mle <- mle2(nll_function,
+                start = list(beta = 0.2, gamma = 0.1),
+                data = list(data = data),
+                method = "L-BFGS-B",
+                lower = c(0.01, 0.01),
+                upper = c(1.0, 0.5))
+
+# Extract results
+mle_params <- coef(fit_mle)
+mle_se <- sqrt(diag(vcov(fit_mle)))
+
+cat("MLE Results:\n")
+cat("Beta:", round(mle_params[1], 3), "±", round(mle_se[1], 3), "\n")
+cat("Gamma:", round(mle_params[2], 3), "±", round(mle_se[2], 3), "\n")
+cat("R0:", round(mle_params[1]/mle_params[2], 2), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Uncertainty Quantification with MLE
+
+```{r mle-uncertainty, echo=TRUE, fig.width=10, fig.height=6}
+# Profile likelihood for uncertainty
+prof <- profile(fit_mle)
+plot(prof, absVal = TRUE, main = "Profile Likelihood")
+
+# Confidence intervals
+confint(fit_mle, level = 0.95)
+
+# Compare with true values
+cat("\nComparison with True Values:\n")
+cat("True Beta:", true_params[1], "\n")
+cat("MLE Beta:", round(mle_params[1], 3), "\n")
+cat("True Gamma:", true_params[2], "\n")
+cat("MLE Gamma:", round(mle_params[2], 3), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Model Comparison with MLE
+
+```{r model-comparison, echo=TRUE}
+# Fit different models and compare
+# Model 1: SIR with Poisson
+# Model 2: SIR with Negative Binomial
+
+# Negative Binomial likelihood
+nll_nb <- function(beta, gamma, phi, data) {
+  out <- ode(y = init_conds, times = data$time,
+             func = sir_model, parms = c(beta = beta, gamma = gamma))
+
+  predicted <- out[,"I"] * 1000
+
+  # Negative Binomial negative log-likelihood
+  nll <- -sum(dnbinom(data$observed, mu = predicted, size = phi, log = TRUE))
+
+  return(nll)
+}
+
+# Fit NB model
+fit_nb <- mle2(nll_nb,
+               start = list(beta = 0.2, gamma = 0.1, phi = 10),
+               data = list(data = data),
+               method = "L-BFGS-B",
+               lower = c(0.01, 0.01, 0.1),
+               upper = c(1.0, 0.5, 100))
+
+# Compare models
+cat("Model Comparison:\n")
+cat("Poisson AIC:", AIC(fit_mle), "\n")
+cat("Negative Binomial AIC:", AIC(fit_nb), "\n")
+cat("Delta AIC:", AIC(fit_nb) - AIC(fit_mle), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Strengths of Maximum Likelihood
+
+**Statistical Rigor:**
+
+-   Principled probabilistic framework
+-   Asymptotic optimality properties
+-   Natural uncertainty quantification
+-   Enables formal hypothesis testing
+
+------------------------------------------------------------------------
+
+## Practical Benefits
+
+-   Confidence intervals and standard errors
+-   Model comparison via AIC/BIC
+-   Handles different error structures
+-   Extensible to complex models
+
+------------------------------------------------------------------------
+
+## Limitations of Maximum Likelihood
+
+**Computational Challenges:**
+
+-   More complex than least squares
+-   Requires optimization algorithms
+-   Can get stuck in local minima
+-   Sensitive to starting values
+
+------------------------------------------------------------------------
+
+## Statistical Assumptions
+
+-   Requires specification of error distribution
+-   Assumes model structure is correct
+-   Asymptotic properties may not hold
+-   Can be sensitive to outliers
+
+------------------------------------------------------------------------
+
+## Identifiability Issues
+
+-   Still suffers from parameter identifiability
+-   Profile likelihood can be computationally expensive
+-   May not converge for complex models
+
+# Part V: Comparison of Methods
+
+------------------------------------------------------------------------
+
+## When to Use Each Method
+
+**Use Least Squares When:**
+
+-   Quick exploratory analysis needed
+-   Getting initial parameter estimates
+-   Computational speed is critical
+-   Simple error structure assumed
+
+------------------------------------------------------------------------
+
+**Use Maximum Likelihood When:**
+
+-   Uncertainty quantification needed
+-   Comparing different models
+-   Formal statistical inference required
+-   Complex error structures present
+-   Publication-quality results needed
+
+<!-- ------------------------------------------------------------------------ -->
+
+<!-- ## Practical Example: COVID-19 Fitting -->
+
+<!-- ```{r covid-comparison, echo=TRUE, fig.width=12, fig.height=8} -->
+<!-- # Simulate more realistic COVID-19 data -->
+<!-- set.seed(123) -->
+<!-- covid_times <- 1:100 -->
+<!-- covid_true_beta <- 0.25 -->
+<!-- covid_true_gamma <- 0.1 -->
+<!-- covid_true_R0 <- covid_true_beta / covid_true_gamma -->
+
+<!-- # Simulate with time-varying transmission -->
+<!-- beta_t <- covid_true_beta * (1 + 0.3 * sin(covid_times * 0.1)) -->
+<!-- out_covid <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
+<!--                  times = covid_times, -->
+<!--                  func = sir_model, -->
+<!--                  parms = c(beta = covid_true_beta, gamma = covid_true_gamma)) -->
+
+<!-- # Add realistic noise -->
+<!-- covid_observed <- rnbinom(length(covid_times), -->
+<!--                          mu = out_covid[,"I"] * 10000, -->
+<!--                          size = 5) -->
+
+<!-- # Fit both methods -->
+<!-- covid_data <- data.frame(time = covid_times, observed = covid_observed) -->
+
+<!-- # Least Squares -->
+<!-- ls_fit <- optim(c(0.02, 0.5), sse_function, data = covid_data) -->
+<!-- ls_params <- ls_fit$par -->
+
+<!-- # Maximum Likelihood -->
+<!-- mle_fit <- mle2(nll_function, -->
+<!--                 start = list(beta = 0.02, gamma = 0.5), -->
+<!--                 data = list(data = covid_data)) -->
+
+<!-- mle_params <- coef(mle_fit) -->
+<!-- mle_se <- sqrt(diag(vcov(mle_fit))) -->
+
+<!-- # Compare results -->
+<!-- comparison_df <- data.frame( -->
+<!--   Method = c("True", "Least Squares", "Maximum Likelihood"), -->
+<!--   Beta = c(covid_true_beta, ls_params[1], mle_params[1]), -->
+<!--   Gamma = c(covid_true_gamma, ls_params[2], mle_params[2]), -->
+<!--   R0 = c(covid_true_R0, ls_params[1]/ls_params[2], mle_params[1]/mle_params[2]) -->
+<!-- ) -->
+
+<!-- print(comparison_df) -->
+<!-- ``` -->
+
+<!-- ------------------------------------------------------------------------ -->
+
+<!-- ## Visual Comparison of Fits -->
+
+<!-- ```{r visual-comparison, echo=TRUE, fig.width=12, fig.height=8} -->
+<!-- # Generate predictions from both methods -->
+<!-- ls_pred <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
+<!--                times = covid_times, -->
+<!--                func = sir_model, -->
+<!--                parms = c(beta = ls_params[1], gamma = ls_params[2]) -->
+<!--                ) -->
+
+<!-- mle_pred <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
+<!--                 times = covid_times, -->
+<!--                 func = sir_model, -->
+<!--                 parms = c(beta = unname(mle_params[1]), gamma = unname(mle_params[2])) -->
+<!--                 ) -->
+
+<!-- # Create comparison plot -->
+<!-- plot_data <- data.frame( -->
+<!--   time = covid_times, -->
+<!--   observed = covid_observed, -->
+<!--   true_model = out_covid[,"I"] * 10000, -->
+<!--   ls_fit = ls_pred[,"I"] * 10000, -->
+<!--   mle_fit = mle_pred[,"I"] * 10000 -->
+<!-- ) -->
+
+<!-- library(ggplot2) -->
+<!-- ggplot(plot_data, aes(x = time)) + -->
+<!--   geom_point(aes(y = observed), color = "red", alpha = 0.6, size = 1) + -->
+<!--   geom_line(aes(y = true_model), color = "black", linewidth = 1.5) + -->
+<!--   geom_line(aes(y = ls_fit), color = "blue", linetype = 1, linetype = "dashed") + -->
+<!--   geom_line(aes(y = mle_fit), color = "green", linetype = 1, linetype = "dotted") + -->
+<!--   labs(x = "Time (days)", y = "Daily Cases", -->
+<!--        title = "Comparison of Fitting Methods") + -->
+<!--   scale_color_manual(values = c("red", "black", "blue", "green")) + -->
+<!--   theme_minimal() + -->
+<!--   theme(legend.position = "bottom") -->
+<!-- ``` -->
+
+# Part VI: Advanced Methods
+
+------------------------------------------------------------------------
+
+## Beyond Least Squares and MLE
+
+**Why We Need Advanced Methods:**
+
+-   Parameter identifiability issues
+-   Complex error structures
+-   Model uncertainty
+-   Computational challenges
+-   Real-time fitting requirements
+
+------------------------------------------------------------------------
+
+## Advanced Approaches
+
+1.  **Bayesian Methods** (MCMC)
+2.  **Particle Filtering**
+3.  **Approximate Bayesian Computation (ABC)**
+4.  **Ensemble Methods**
+
+------------------------------------------------------------------------
+
+## Bayesian Methods: MCMC
+
+**Core Idea:** Treat parameters as random variables with prior distributions
+
+**Bayes' Theorem:** $$P(\theta | \mathbf{y}) = \frac{P(\mathbf{y} | \theta) P(\theta)}{P(\mathbf{y})}$$
+
+------------------------------------------------------------------------
+
+## Advantages
+
+-   Natural uncertainty quantification
+-   Incorporates prior knowledge
+-   Handles parameter identifiability
+-   Model comparison via Bayes factors
+
+------------------------------------------------------------------------
+
+## Example with Stan
+
+```{r mcmc-example, echo=TRUE, eval=FALSE}
+# Stan model for SIR fitting
+stan_code <- "
+data {
+  int<lower=0> N;
+  vector[N] time;
+  int<lower=0> cases[N];
+  real<lower=0> S0;
+  real<lower=0> I0;
+  real<lower=0> R0;
+}
+
+parameters {
+  real<lower=0> beta;
+  real<lower=0> gamma;
+  real<lower=0> sigma;
+}
+
+model {
+  // Priors
+  beta ~ normal(0.3, 0.1);
+  gamma ~ normal(0.1, 0.05);
+  sigma ~ exponential(1);
+
+  // Likelihood
+  for(i in 1:N) {
+    // Solve ODE (simplified)
+    real S = S0 * exp(-beta * I0 * time[i]);
+    real I = I0 * exp((beta * S0 - gamma) * time[i]);
+    cases[i] ~ normal(I * 1000, sigma);
+  }
+}
+"
+```
+
+------------------------------------------------------------------------
+
+## Particle Filtering
+
+**Core Idea:** Sequential Monte Carlo method for state-space models
+
+**When to Use:**
+
+-   Real-time parameter estimation
+-   State estimation in stochastic models
+-   Handling of missing data
+-   Time-varying parameters
+
+------------------------------------------------------------------------
+
+## Advantages
+
+-   Handles stochasticity naturally
+-   Real-time updates
+-   No assumption of constant parameters
+-   Robust to model misspecification
+
+------------------------------------------------------------------------
+
+## Example Application
+
+```{r particle-filter, echo=TRUE, eval=FALSE}
+# Particle filter for SIR model
+library(pomp)
+
+# Define SIR model with stochasticity
+sir_pomp <- pomp(
+  data = data.frame(time = covid_times, cases = covid_observed),
+  times = "time",
+  t0 = 0,
+  rprocess = euler.sim(
+    step.fun = "sir_step",
+    delta.t = 0.1
+  ),
+  rmeasure = "cases_measure",
+  dmeasure = "cases_dmeasure",
+  initializer = "sir_init",
+  paramnames = c("beta", "gamma", "sigma"),
+  statenames = c("S", "I", "R")
+)
+
+# Run particle filter
+pf <- pfilter(sir_pomp, Np = 1000, params = c(beta = 0.3, gamma = 0.1, sigma = 1))
+```
+
+------------------------------------------------------------------------
+
+## Approximate Bayesian Computation (ABC)
+
+**Core Idea:** Approximate posterior without likelihood evaluation
+
+**When to Use:**
+
+-   Complex likelihoods
+-   Intractable models
+-   High-dimensional parameter spaces
+-   Model comparison
+
+------------------------------------------------------------------------
+
+**Algorithm:**
+
+1.  Sample parameters from prior
+2.  Simulate data from model
+3.  Compare simulated to observed data
+4.  Accept if distance \< threshold
+
+------------------------------------------------------------------------
+
+**Advantages:**
+
+-   No likelihood required
+-   Handles complex models
+-   Model comparison
+-   Intuitive approach
+
+------------------------------------------------------------------------
+
+## Ensemble Methods
+
+**Core Idea:** Combine multiple models or methods
+
+**Types:**
+
+-   **Model Ensembles**: Average predictions from different models
+-   **Method Ensembles**: Combine LS, MLE, MCMC results
+-   **Bootstrap Ensembles**: Multiple fits with resampled data
+
+------------------------------------------------------------------------
+
+## Advantages:
+
+-   Reduces overfitting
+-   Quantifies model uncertainty
+-   More robust predictions
+-   Handles model selection uncertainty
+
+# Part VII: Practical Considerations
+
+------------------------------------------------------------------------
+
+## Common Fitting Problems
+
+**Convergence Issues:**
+
+-   Poor starting values
+-   Flat likelihood surfaces
+-   Numerical instabilities
+-   Parameter bounds
+
+------------------------------------------------------------------------
+
+**Identifiability Problems:**
+
+-   Multiple solutions
+-   Correlated parameters
+-   Insufficient data
+-   Model overparameterization
+
+------------------------------------------------------------------------
+
+**Solutions:**
+
+-   Multiple starting points
+-   Profile likelihood
+-   Data augmentation
+
+------------------------------------------------------------------------
+
+## Troubleshooting Guide
+
+**If Optimization Fails:**
+
+1.  Check starting values
+2.  Verify parameter bounds
+3.  Examine objective function
+4.  Try different algorithms
+5.  Simplify the model
+
+------------------------------------------------------------------------
+
+**If Parameters Are Unidentifiable:**
+
+1.  Fix some parameters
+2.  Use additional data
+3.  Add regularization
+4.  Consider model reduction
+5.  Use prior information
+
+------------------------------------------------------------------------
+
+**If Results Are Unrealistic:**
+
+1.  Check model assumptions
+2.  Verify data quality
+3.  Examine residuals
+4.  Test sensitivity
+5.  Consider alternative models
+
+------------------------------------------------------------------------
+
+## Best Practices
+
+**Before Fitting:**
+
+-   Understand your data
+-   Check model assumptions
+-   Set realistic parameter bounds
+-   Prepare multiple starting values
+
+------------------------------------------------------------------------
+
+**During Fitting:**
+
+-   Monitor convergence
+-   Check for local minima
+-   Validate results
+-   Document everything
+
+------------------------------------------------------------------------
+
+**After Fitting:**
+
+-   Assess goodness of fit
+-   Quantify uncertainty
+-   Test sensitivity
+-   Validate predictions
+
+------------------------------------------------------------------------
+
+## Software Recommendations
+
+**R Packages:**
+
+-   `bbmle`: Maximum likelihood
+-   `rstan`: Bayesian inference
+-   `pomp`: Particle filtering
+
+------------------------------------------------------------------------
+
+**Specialized Software:**
+
+-   `Stan`: Probabilistic programming
+-   `JAGS`: Bayesian analysis
+-   `PyMC`: Bayesian inference
+
+# Part VIII: Conclusions
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+**Least Squares:**
+
+-   Fast and intuitive
+-   Good for exploration
+-   Limited uncertainty quantification
+-   Sensitive to assumptions
+
+------------------------------------------------------------------------
+
+**Maximum Likelihood:**
+
+-   Principled statistical framework
+-   Natural uncertainty quantification
+-   Enables model comparison
+-   More computationally intensive
+
+------------------------------------------------------------------------
+
+**Advanced Methods:**
+
+-   Handle complex scenarios
+-   Provide robust uncertainty
+-   Require more expertise
+-   Often computationally expensive
+
+------------------------------------------------------------------------
+
+## Choosing the Right Method
+
+**For Quick Exploration:** Least Squares
+
+**For Publication:** Maximum Likelihood
+
+**For Complex Models:** Bayesian Methods
+
+**For Real-time:** Particle Filtering
+
+**For Model Comparison:** ABC or MCMC
+
+**General Principle:** Start simple, add complexity as needed
+
+------------------------------------------------------------------------
+
+## Final Thoughts
+
+**Model fitting is both art and science:**
+
+-   Requires domain expertise
+-   Demands statistical rigor
+-   Benefits from computational tools
+-   Needs careful validation
+
+------------------------------------------------------------------------
+
+**The goal is not just to fit models, but to:**
+
+-   Understand disease dynamics
+-   Make reliable predictions
+-   Inform policy decisions
+-   Advance scientific knowledge
+
+------------------------------------------------------------------------
+
+::: {.fragment style="font-size: 450%"}
+Any Questions?
+:::
+
+## References
+
+-   Anderson, R.M. and May, R.M. (1991). *Infectious Diseases of Humans: Dynamics and Control*. Oxford University Press.
+-   Keeling, M.J. and Rohani, P. (2008). *Modeling Infectious Diseases in Humans and Animals*. Princeton University Press.
+-   Bolker, B. (2008). *Ecological Models and Data in R*. Princeton University Press.
+-   King, A.A. et al. (2016). "Statistical inference for partially observed Markov processes via the R package pomp." *Journal of Statistical Software*.
+-   Carpenter, B. et al. (2017). "Stan: A probabilistic programming language." *Journal of Statistical Software*.

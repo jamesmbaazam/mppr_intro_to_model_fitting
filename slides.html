@@ -7,11 +7,15 @@
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.433">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="slides_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="slides_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.43">
 
-  <meta name="author" content="Author name">
-  <title>My title</title>
+  <meta name="author" content="James Mba Azam, PhD">
+  <meta name="dcterms.date" content="2025-09-04">
+  <title>Introduction to Model Fitting and Calibration</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -29,11 +33,78 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -156,7 +227,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -243,6 +315,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -320,37 +393,1117 @@
     }
   </style>
 </head>
-<body class="quarto-dark">
+<body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">My title</h1>
+  <h1 class="title">Introduction to Model Fitting and Calibration</h1>
+  <p class="subtitle">Compartmental Models in Epidemiology</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Author name 
+James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
 </div>
+<div class="quarto-title-author-email">
+<a href="mailto:james.azam@lshtm.ac.uk">james.azam@lshtm.ac.uk</a>
 </div>
+        <p class="quarto-title-affiliation">
+            London School of Hygiene and Tropical Medicine, UK
+          </p>
+    </div>
 </div>
 
+  <p class="date">2025-09-04</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#/part-i-introduction-motivation" id="/toc-part-i-introduction-motivation">Part I: Introduction &amp; Motivation</a></li>
+<li><a href="#/part-ii-conceptual-foundations" id="/toc-part-ii-conceptual-foundations">Part II: Conceptual Foundations</a></li>
+<li><a href="#/part-iii-least-squares-estimation" id="/toc-part-iii-least-squares-estimation">Part III: Least Squares Estimation</a></li>
+<li><a href="#/part-iv-maximum-likelihood-estimation" id="/toc-part-iv-maximum-likelihood-estimation">Part IV: Maximum Likelihood Estimation</a></li>
+<li><a href="#/part-v-comparison-of-methods" id="/toc-part-v-comparison-of-methods">Part V: Comparison of Methods</a></li>
+<li><a href="#/part-vi-advanced-methods" id="/toc-part-vi-advanced-methods">Part VI: Advanced Methods</a></li>
+<li><a href="#/part-vii-practical-considerations" id="/toc-part-vii-practical-considerations">Part VII: Practical Considerations</a></li>
+<li><a href="#/part-viii-conclusions" id="/toc-part-viii-conclusions">Part VIII: Conclusions</a></li>
+</ul>
+</nav>
 </section>
-<section id="some-title" class="slide level2">
-<h2>Some title</h2>
-<p>Talk outline:</p>
+<section id="learning-objectives" class="slide level2">
+<h2>Learning Objectives</h2>
+<p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li>Understand the fundamental concepts of model fitting and calibration</li>
+<li>Apply least squares estimation to compartmental models</li>
+<li>Implement maximum likelihood estimation for epidemic models</li>
+<li>Compare the strengths and weaknesses of different fitting methods</li>
+<li>Recognize when to use advanced methods like MCMC and particle filtering</li>
+<li>Troubleshoot common fitting problems</li>
+</ul>
 </section>
-<section id="slide-1" class="slide level2">
-<h2>Slide 1</h2>
-<p>Some content</p>
+<section>
+<section id="part-i-introduction-motivation" class="title-slide slide level1 center">
+<h1>Part I: Introduction &amp; Motivation</h1>
+
 </section>
-<section id="slide-2" class="slide level2">
-<h2>Slide 2</h2>
-<p>Some more content</p>
+<section id="why-model-fitting-matters" class="slide level2">
+<h2>Why Model Fitting Matters</h2>
+<h3 id="the-challenge">The Challenge</h3>
+<p><strong>The Challenge:</strong></p>
+<ul>
+<li>We have mathematical models (e.g., SIR, SEIR)</li>
+<li>We have real-world data (case counts, hospitalizations)</li>
+<li><strong>How do we connect them?</strong></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="the-goal">The Goal</h3>
+<ul>
+<li>Find parameter values that make our model predictions match observed data</li>
+<li>Quantify uncertainty in our estimates</li>
+<li>Make reliable predictions and policy recommendations</li>
+</ul>
+</section>
+<section id="example-outbreak-data" class="slide level2">
+<h2>Example: Outbreak data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="slides_files/figure-revealjs/covid-example-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="slides_files/figure-revealjs/covid-example-1.png" width="960"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Question:</strong> How do we estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> from this noisy data?</p>
+</section>
+<section id="types-of-fitting-methods" class="slide level2">
+<h2>Types of Fitting Methods</h2>
+<h3 id="deterministic-methods">Deterministic Methods</h3>
+<ul>
+<li>Least Squares</li>
+<li>Maximum Likelihood Estimation (MLE)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="stochastic-methods">Stochastic Methods</h3>
+<ul>
+<li>Markov Chain Monte Carlo (MCMC)</li>
+<li>Sequential Monte Carlo (SMC)</li>
+<li>Particle MCMC (pMCMC)</li>
+<li>Approximate Bayesian Computation (ABC)</li>
+</ul>
+<p><strong>Today’s Focus:</strong> Least Squares and MLE as foundations</p>
+</section></section>
+<section>
+<section id="part-ii-conceptual-foundations" class="title-slide slide level1 center">
+<h1>Part II: Conceptual Foundations</h1>
+
+</section>
+<section id="what-is-model-fitting" class="slide level2">
+<h2>What is Model Fitting?</h2>
+<p><strong>Definition:</strong> The process of finding parameter values that make a mathematical model’s predictions as close as possible to observed data.</p>
+</section>
+<section id="mathematical-formulation" class="slide level2">
+<h2>Mathematical Formulation</h2>
+<p><span class="math display">\[\hat{\theta} = \arg\min_{\theta} \mathcal{L}(\theta, \mathbf{y})\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\theta\)</span> = parameter vector (e.g., <span class="math inline">\(\beta, \gamma\)</span>)</li>
+<li><span class="math inline">\(\mathbf{y}\)</span> = observed data</li>
+<li><span class="math inline">\(\mathcal{L}\)</span> = loss/objective function</li>
+</ul>
+</section>
+<section id="the-sir-model-as-our-example" class="slide level2">
+<h2>The SIR Model as Our Example</h2>
+<p><strong>Differential Equations:</strong></p>
+<p><span class="math display">\[\frac{dS}{dt} = -\beta SI\]</span> <span class="math display">\[\frac{dI}{dt} = \beta SI - \gamma I\]</span> <span class="math display">\[\frac{dR}{dt} = \gamma I\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="parameters-to-estimate">Parameters to Estimate</h3>
+<ul>
+<li><span class="math inline">\(\beta\)</span> = transmission rate</li>
+<li><span class="math inline">\(\gamma\)</span> = recovery rate</li>
+</ul>
+</section>
+<section id="key-quantities" class="slide level2">
+<h2>Key Quantities</h2>
+<ul>
+<li><span class="math inline">\(R_0 = \frac{\beta}{\gamma}\)</span> (basic reproduction number)</li>
+<li>Infectious period = <span class="math inline">\(\frac{1}{\gamma}\)</span></li>
+</ul>
+</section>
+<section id="sources-of-uncertainty" class="slide level2">
+<h2>Sources of Uncertainty</h2>
+<h3 id="model-uncertainty">Model Uncertainty</h3>
+<ul>
+<li>Wrong model structure</li>
+<li>Missing compartments or processes</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="parameter-uncertainty">Parameter Uncertainty</h3>
+<ul>
+<li>True parameter values unknown</li>
+<li>Multiple parameter sets give similar fits</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="observation-uncertainty">Observation Uncertainty</h3>
+<ul>
+<li>Measurement error</li>
+<li>Reporting delays</li>
+<li>Underreporting</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="process-uncertainty">Process Uncertainty</h3>
+<ul>
+<li>Stochasticity in disease transmission</li>
+<li>Environmental variability</li>
+</ul>
+</section>
+<section id="the-fitting-challenge" class="slide level2">
+<h2>The Fitting Challenge</h2>
+<p><strong>Identifiability Problem:</strong> Multiple parameter combinations can produce similar model outputs</p>
+<p><strong>Example:</strong></p>
+<ul>
+<li>High <span class="math inline">\(\beta\)</span>, high <span class="math inline">\(\gamma\)</span></li>
+<li>Low <span class="math inline">\(\beta\)</span>, low <span class="math inline">\(\gamma\)</span></li>
+</ul>
+<p>Both might give similar epidemic curves!</p>
+<p><strong>Solution:</strong> Use additional information (e.g., known infectious period)</p>
+</section></section>
+<section>
+<section id="part-iii-least-squares-estimation" class="title-slide slide level1 center">
+<h1>Part III: Least Squares Estimation</h1>
+
+</section>
+<section id="least-squares-the-intuitive-approach" class="slide level2">
+<h2>Least Squares: The Intuitive Approach</h2>
+<p><strong>Core Idea:</strong> Minimize the sum of squared differences between model predictions and observations</p>
+</section>
+<section class="slide level2">
+
+<p><strong>Mathematical Formulation:</strong> <span class="math display">\[\text{SSE} = \sum_{i=1}^{n} (y_i - f(t_i, \theta))^2\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(y_i\)</span> = observed value at time <span class="math inline">\(t_i\)</span></li>
+<li><span class="math inline">\(f(t_i, \theta)\)</span> = model prediction at time <span class="math inline">\(t_i\)</span></li>
+<li><span class="math inline">\(\theta\)</span> = parameter vector</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="why-squared-errors">Why Squared Errors?</h3>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Penalizes large errors more heavily</li>
+<li>Differentiable (smooth optimization)</li>
+<li>Mathematically tractable</li>
+<li>Gives maximum likelihood estimates when errors are normal distributed</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="disadvantages">Disadvantages</h3>
+<ul>
+<li>Sensitive to outliers</li>
+<li>Assumes constant variance</li>
+<li>No probabilistic interpretation</li>
+</ul>
+</section>
+<section id="least-squares-example-sir-model" class="slide level2">
+<h2>Least Squares Example: SIR Model</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="slides_files/figure-revealjs/ls-example-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="slides_files/figure-revealjs/ls-example-1.png" width="960"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="implementing-least-squares" class="slide level2">
+<h2>Implementing Least Squares</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Define objective function</span></span>
+<span id="cb1-2"><a href=""></a>sse_function <span class="ot">&lt;-</span> <span class="cf">function</span>(params, data) {</span>
+<span id="cb1-3"><a href=""></a>  beta <span class="ot">&lt;-</span> params[<span class="dv">1</span>]</span>
+<span id="cb1-4"><a href=""></a>  gamma <span class="ot">&lt;-</span> params[<span class="dv">2</span>]</span>
+<span id="cb1-5"><a href=""></a>  </span>
+<span id="cb1-6"><a href=""></a>  <span class="co"># Simulate model</span></span>
+<span id="cb1-7"><a href=""></a>  out <span class="ot">&lt;-</span> <span class="fu">ode</span>(</span>
+<span id="cb1-8"><a href=""></a>    <span class="at">y =</span> init_conds,</span>
+<span id="cb1-9"><a href=""></a>    <span class="at">times =</span> data<span class="sc">$</span>time,</span>
+<span id="cb1-10"><a href=""></a>    <span class="at">func =</span> sir_model,</span>
+<span id="cb1-11"><a href=""></a>    <span class="at">parms =</span> <span class="fu">c</span>(<span class="at">beta =</span> beta, <span class="at">gamma =</span> gamma)</span>
+<span id="cb1-12"><a href=""></a>  )</span>
+<span id="cb1-13"><a href=""></a>  </span>
+<span id="cb1-14"><a href=""></a>  <span class="co"># Calculate sum of squared errors</span></span>
+<span id="cb1-15"><a href=""></a>  predicted <span class="ot">&lt;-</span> out[, <span class="st">"I"</span>] <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb1-16"><a href=""></a>  sse <span class="ot">&lt;-</span> <span class="fu">sum</span>((data<span class="sc">$</span>observed <span class="sc">-</span> predicted)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-17"><a href=""></a>  </span>
+<span id="cb1-18"><a href=""></a>  <span class="fu">return</span>(sse)</span>
+<span id="cb1-19"><a href=""></a>}</span>
+<span id="cb1-20"><a href=""></a></span>
+<span id="cb1-21"><a href=""></a><span class="co"># Prepare data</span></span>
+<span id="cb1-22"><a href=""></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> times, <span class="at">observed =</span> observed_cases)</span>
+<span id="cb1-23"><a href=""></a></span>
+<span id="cb1-24"><a href=""></a><span class="co"># Test different parameter values</span></span>
+<span id="cb1-25"><a href=""></a>test_params <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb1-26"><a href=""></a>  <span class="at">beta =</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="at">length.out =</span> <span class="dv">10</span>),</span>
+<span id="cb1-27"><a href=""></a>  <span class="at">gamma =</span> <span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="at">length.out =</span> <span class="dv">10</span>)</span>
+<span id="cb1-28"><a href=""></a>)</span>
+<span id="cb1-29"><a href=""></a></span>
+<span id="cb1-30"><a href=""></a><span class="co"># Calculate SSE for each combination</span></span>
+<span id="cb1-31"><a href=""></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test_params)){</span>
+<span id="cb1-32"><a href=""></a>  test_params<span class="sc">$</span>sse[i] <span class="ot">&lt;-</span> <span class="fu">sse_function</span>(</span>
+<span id="cb1-33"><a href=""></a>    <span class="fu">c</span>(</span>
+<span id="cb1-34"><a href=""></a>      test_params[i, <span class="dv">1</span>],</span>
+<span id="cb1-35"><a href=""></a>      test_params[i, <span class="dv">2</span>]</span>
+<span id="cb1-36"><a href=""></a>    ),</span>
+<span id="cb1-37"><a href=""></a>    data</span>
+<span id="cb1-38"><a href=""></a>  )</span>
+<span id="cb1-39"><a href=""></a>}</span>
+<span id="cb1-40"><a href=""></a></span>
+<span id="cb1-41"><a href=""></a><span class="co"># Find minimum</span></span>
+<span id="cb1-42"><a href=""></a>best_idx <span class="ot">&lt;-</span> <span class="fu">which.min</span>(test_params<span class="sc">$</span>sse)</span>
+<span id="cb1-43"><a href=""></a>best_params <span class="ot">&lt;-</span> test_params[best_idx, ]</span>
+<span id="cb1-44"><a href=""></a><span class="fu">cat</span>(<span class="st">"True parameters: Beta ="</span>, true_params[<span class="dv">1</span>], <span class="st">", Gamma ="</span>, true_params[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True parameters: Beta = 0.3 , Gamma = 0.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Best fit parameters: Beta ="</span>, <span class="fu">round</span>(best_params<span class="sc">$</span>beta, <span class="dv">3</span>), <span class="st">", Gamma ="</span>, <span class="fu">round</span>(best_params<span class="sc">$</span>gamma, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best fit parameters: Beta = 0.322 , Gamma = 0.1 </code></pre>
+</div>
+</div>
+</section>
+<section id="strengths-of-least-squares" class="slide level2">
+<h2>Strengths of Least Squares</h2>
+<p><strong>Computational Advantages:</strong></p>
+<ul>
+<li>Fast and efficient</li>
+<li>Well-established algorithms</li>
+<li>Easy to implement</li>
+<li>Good for initial parameter estimates</li>
+</ul>
+</section>
+<section id="statistical-properties" class="slide level2">
+<h2>Statistical Properties</h2>
+<ul>
+<li>Unbiased estimates (under certain conditions)</li>
+<li>Minimum variance among linear unbiased estimators</li>
+<li>Maximum likelihood when errors are normal</li>
+</ul>
+</section>
+<section id="practical-benefits" class="slide level2">
+<h2>Practical Benefits</h2>
+<ul>
+<li>Intuitive interpretation</li>
+<li>Widely understood</li>
+<li>Good starting point for more complex methods</li>
+</ul>
+</section>
+<section id="limitations-of-least-squares" class="slide level2">
+<h2>Limitations of Least Squares</h2>
+<p><strong>Statistical Limitations:</strong></p>
+<ul>
+<li>Limited uncertainty quantification</li>
+<li>Assumes constant variance</li>
+<li>Sensitive to outliers</li>
+<li>No probabilistic framework</li>
+</ul>
+</section>
+<section id="practical-limitations" class="slide level2">
+<h2>Practical Limitations</h2>
+<p><strong>Practical Limitations:</strong></p>
+<ul>
+<li>Parameter identifiability issues</li>
+<li>No confidence intervals</li>
+<li>Difficult to compare models</li>
+<li>Assumes measurement error only</li>
+</ul>
+</section>
+<section id="example-problem" class="slide level2">
+<h2>Example Problem</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Show how different parameter combinations can give similar fits</span></span>
+<span id="cb5-2"><a href=""></a>param_combos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-3"><a href=""></a>  <span class="at">beta =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.35</span>, <span class="fl">0.30</span>),</span>
+<span id="cb5-4"><a href=""></a>  <span class="at">gamma =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.12</span>, <span class="fl">0.10</span>),</span>
+<span id="cb5-5"><a href=""></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Low β, Low γ"</span>, <span class="st">"High β, High γ"</span>, <span class="st">"True"</span>)</span>
+<span id="cb5-6"><a href=""></a>)</span>
+<span id="cb5-7"><a href=""></a></span>
+<span id="cb5-8"><a href=""></a><span class="co"># Plot different fits</span></span>
+<span id="cb5-9"><a href=""></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb5-10"><a href=""></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> observed), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-11"><a href=""></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> true_model), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (days)"</span>, <span class="at">y =</span> <span class="st">"Number of Cases"</span>,</span>
+<span id="cb5-13"><a href=""></a>       <span class="at">title =</span> <span class="st">"Multiple Parameter Sets Can Give Similar Fits"</span>) <span class="sc">+</span></span>
+<span id="cb5-14"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="slides_files/figure-revealjs/ls-limitation-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="slides_files/figure-revealjs/ls-limitation-1.png" width="960"></a></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># Add lines for different parameter combinations</span></span>
+<span id="cb6-2"><a href=""></a>out_test <span class="ot">&lt;-</span> <span class="fu">ode</span>(</span>
+<span id="cb6-3"><a href=""></a>    <span class="at">y =</span> init_conds,</span>
+<span id="cb6-4"><a href=""></a>    <span class="at">times =</span> times,</span>
+<span id="cb6-5"><a href=""></a>    <span class="at">func =</span> sir_model,</span>
+<span id="cb6-6"><a href=""></a>    <span class="at">parms =</span> <span class="fu">c</span>(<span class="at">beta =</span> param_combos<span class="sc">$</span>beta[<span class="dv">1</span>],</span>
+<span id="cb6-7"><a href=""></a>              <span class="at">gamma =</span> param_combos<span class="sc">$</span>gamma[<span class="dv">1</span>]</span>
+<span id="cb6-8"><a href=""></a>    ))</span>
+<span id="cb6-9"><a href=""></a></span>
+<span id="cb6-10"><a href=""></a><span class="fu">plot</span>(times, out_test[, <span class="st">"I"</span>] <span class="sc">*</span> <span class="dv">1000</span>,</span>
+<span id="cb6-11"><a href=""></a>     <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"orange"</span>, <span class="st">"purple"</span>)[<span class="dv">1</span>],</span>
+<span id="cb6-12"><a href=""></a>     <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb6-13"><a href=""></a>)</span>
+<span id="cb6-14"><a href=""></a></span>
+<span id="cb6-15"><a href=""></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(param_combos)) {</span>
+<span id="cb6-16"><a href=""></a>  out_test <span class="ot">&lt;-</span> <span class="fu">ode</span>(</span>
+<span id="cb6-17"><a href=""></a>    <span class="at">y =</span> init_conds,</span>
+<span id="cb6-18"><a href=""></a>    <span class="at">times =</span> times,</span>
+<span id="cb6-19"><a href=""></a>    <span class="at">func =</span> sir_model,</span>
+<span id="cb6-20"><a href=""></a>    <span class="at">parms =</span> <span class="fu">c</span>(<span class="at">beta =</span> param_combos<span class="sc">$</span>beta[i],</span>
+<span id="cb6-21"><a href=""></a>              <span class="at">gamma =</span> param_combos<span class="sc">$</span>gamma[i]</span>
+<span id="cb6-22"><a href=""></a>    ))</span>
+<span id="cb6-23"><a href=""></a>  <span class="fu">lines</span>(times, out_test[, <span class="st">"I"</span>] <span class="sc">*</span> <span class="dv">1000</span>,</span>
+<span id="cb6-24"><a href=""></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"orange"</span>, <span class="st">"purple"</span>)[i],</span>
+<span id="cb6-25"><a href=""></a>        <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb6-26"><a href=""></a>  )</span>
+<span id="cb6-27"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="slides_files/figure-revealjs/ls-limitation-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img data-src="slides_files/figure-revealjs/ls-limitation-2.png" width="960"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="part-iv-maximum-likelihood-estimation" class="title-slide slide level1 center">
+<h1>Part IV: Maximum Likelihood Estimation</h1>
+
+</section>
+<section id="maximum-likelihood-the-probabilistic-approach" class="slide level2">
+<h2>Maximum Likelihood: The Probabilistic Approach</h2>
+<p><strong>Core Idea:</strong> Find parameter values that make the observed data most probable</p>
+<p><strong>Mathematical Formulation:</strong> <span class="math display">\[\hat{\theta} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \prod_{i=1}^{n} f(y_i | \theta)\]</span></p>
+<p>Where: - <span class="math inline">\(L(\theta)\)</span> = likelihood function - <span class="math inline">\(f(y_i | \theta)\)</span> = probability density of observation <span class="math inline">\(i\)</span></p>
+</section>
+<section class="slide level2">
+
+<p><strong>In Practice:</strong> Maximize log-likelihood <span class="math display">\[\hat{\theta} = \arg\max_{\theta} \ell(\theta) = \arg\max_{\theta} \sum_{i=1}^{n} \log f(y_i | \theta)\]</span></p>
+</section>
+<section id="why-maximum-likelihood" class="slide level2">
+<h2>Why Maximum Likelihood?</h2>
+<p><strong>Theoretical Advantages:</strong></p>
+<ul>
+<li>Principled statistical framework</li>
+<li>Provides uncertainty quantification</li>
+<li>Enables model comparison (AIC, BIC)</li>
+<li>Asymptotically optimal properties</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Practical Benefits:</strong></p>
+<ul>
+<li>Confidence intervals</li>
+<li>Hypothesis testing</li>
+<li>Model selection</li>
+<li>Incorporates different error structures</li>
+</ul>
+</section>
+<section id="choosing-a-probability-distribution" class="slide level2">
+<h2>Choosing a Probability Distribution</h2>
+<p><strong>For Count Data (Cases):</strong></p>
+<ul>
+<li><strong>Poisson</strong>: <span class="math inline">\(Y_i \sim \text{Poisson}(\lambda_i)\)</span></li>
+<li><strong>Negative Binomial</strong>: <span class="math inline">\(Y_i \sim \text{NB}(\mu_i, \phi)\)</span></li>
+</ul>
+</section>
+<section id="choosing-a-probability-distribution-1" class="slide level2">
+<h2>Choosing a Probability Distribution</h2>
+<p><strong>For Continuous Data:</strong></p>
+<ul>
+<li><strong>Normal</strong>: <span class="math inline">\(Y_i \sim N(\mu_i, \sigma^2)\)</span></li>
+<li><strong>Log-normal</strong>: <span class="math inline">\(\log Y_i \sim N(\log \mu_i, \sigma^2)\)</span></li>
+</ul>
+<p><strong>For Our SIR Example:</strong> We’ll use Poisson since we’re modeling case counts</p>
+</section>
+<section id="mle-implementation-poisson-likelihood" class="slide level2">
+<h2>MLE Implementation: Poisson Likelihood</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Define negative log-likelihood function</span></span>
+<span id="cb7-2"><a href=""></a>nll_function <span class="ot">&lt;-</span> <span class="cf">function</span>(beta, gamma, data) {</span>
+<span id="cb7-3"><a href=""></a>  <span class="co"># Simulate model</span></span>
+<span id="cb7-4"><a href=""></a>  out <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> init_conds, <span class="at">times =</span> data<span class="sc">$</span>time,</span>
+<span id="cb7-5"><a href=""></a>             <span class="at">func =</span> sir_model, <span class="at">parms =</span> <span class="fu">c</span>(<span class="at">beta =</span> beta, <span class="at">gamma =</span> gamma))</span>
+<span id="cb7-6"><a href=""></a></span>
+<span id="cb7-7"><a href=""></a>  <span class="co"># Model predictions (scaled to cases)</span></span>
+<span id="cb7-8"><a href=""></a>  predicted <span class="ot">&lt;-</span> out[,<span class="st">"I"</span>] <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb7-9"><a href=""></a></span>
+<span id="cb7-10"><a href=""></a>  <span class="co"># Poisson negative log-likelihood</span></span>
+<span id="cb7-11"><a href=""></a>  nll <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">dpois</span>(data<span class="sc">$</span>observed, <span class="at">lambda =</span> predicted, <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-12"><a href=""></a></span>
+<span id="cb7-13"><a href=""></a>  <span class="fu">return</span>(nll)</span>
+<span id="cb7-14"><a href=""></a>}</span>
+<span id="cb7-15"><a href=""></a></span>
+<span id="cb7-16"><a href=""></a><span class="co"># Use optimization to find MLE</span></span>
+<span id="cb7-17"><a href=""></a><span class="fu">library</span>(bbmle)</span>
+<span id="cb7-18"><a href=""></a>fit_mle <span class="ot">&lt;-</span> <span class="fu">mle2</span>(nll_function,</span>
+<span id="cb7-19"><a href=""></a>                <span class="at">start =</span> <span class="fu">list</span>(<span class="at">beta =</span> <span class="fl">0.2</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>),</span>
+<span id="cb7-20"><a href=""></a>                <span class="at">data =</span> <span class="fu">list</span>(<span class="at">data =</span> data),</span>
+<span id="cb7-21"><a href=""></a>                <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>,</span>
+<span id="cb7-22"><a href=""></a>                <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.01</span>),</span>
+<span id="cb7-23"><a href=""></a>                <span class="at">upper =</span> <span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.5</span>))</span>
+<span id="cb7-24"><a href=""></a></span>
+<span id="cb7-25"><a href=""></a><span class="co"># Extract results</span></span>
+<span id="cb7-26"><a href=""></a>mle_params <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit_mle)</span>
+<span id="cb7-27"><a href=""></a>mle_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(fit_mle)))</span>
+<span id="cb7-28"><a href=""></a></span>
+<span id="cb7-29"><a href=""></a><span class="fu">cat</span>(<span class="st">"MLE Results:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MLE Results:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Beta:"</span>, <span class="fu">round</span>(mle_params[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">"±"</span>, <span class="fu">round</span>(mle_se[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Beta: 0.291 ± 0.003 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Gamma:"</span>, <span class="fu">round</span>(mle_params[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"±"</span>, <span class="fu">round</span>(mle_se[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Gamma: 0.05 ± 0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"R0:"</span>, <span class="fu">round</span>(mle_params[<span class="dv">1</span>]<span class="sc">/</span>mle_params[<span class="dv">2</span>], <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R0: 5.79 </code></pre>
+</div>
+</div>
+</section>
+<section id="uncertainty-quantification-with-mle" class="slide level2">
+<h2>Uncertainty Quantification with MLE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Profile likelihood for uncertainty</span></span>
+<span id="cb15-2"><a href=""></a>prof <span class="ot">&lt;-</span> <span class="fu">profile</span>(fit_mle)</span>
+<span id="cb15-3"><a href=""></a><span class="fu">plot</span>(prof, <span class="at">absVal =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Profile Likelihood"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="slides_files/figure-revealjs/mle-uncertainty-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img data-src="slides_files/figure-revealjs/mle-uncertainty-1.png" width="960"></a></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Confidence intervals</span></span>
+<span id="cb16-2"><a href=""></a><span class="fu">confint</span>(fit_mle, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           2.5 %     97.5 %
+beta  0.28620452 0.29599639
+gamma 0.04961407 0.05089814</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># Compare with true values</span></span>
+<span id="cb18-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Comparison with True Values:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Comparison with True Values:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"True Beta:"</span>, true_params[<span class="dv">1</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True Beta: 0.3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"MLE Beta:"</span>, <span class="fu">round</span>(mle_params[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MLE Beta: 0.291 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"True Gamma:"</span>, true_params[<span class="dv">2</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True Gamma: 0.1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"MLE Gamma:"</span>, <span class="fu">round</span>(mle_params[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MLE Gamma: 0.05 </code></pre>
+</div>
+</div>
+</section>
+<section id="model-comparison-with-mle" class="slide level2">
+<h2>Model Comparison with MLE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># Fit different models and compare</span></span>
+<span id="cb28-2"><a href=""></a><span class="co"># Model 1: SIR with Poisson</span></span>
+<span id="cb28-3"><a href=""></a><span class="co"># Model 2: SIR with Negative Binomial</span></span>
+<span id="cb28-4"><a href=""></a></span>
+<span id="cb28-5"><a href=""></a><span class="co"># Negative Binomial likelihood</span></span>
+<span id="cb28-6"><a href=""></a>nll_nb <span class="ot">&lt;-</span> <span class="cf">function</span>(beta, gamma, phi, data) {</span>
+<span id="cb28-7"><a href=""></a>  out <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> init_conds, <span class="at">times =</span> data<span class="sc">$</span>time,</span>
+<span id="cb28-8"><a href=""></a>             <span class="at">func =</span> sir_model, <span class="at">parms =</span> <span class="fu">c</span>(<span class="at">beta =</span> beta, <span class="at">gamma =</span> gamma))</span>
+<span id="cb28-9"><a href=""></a></span>
+<span id="cb28-10"><a href=""></a>  predicted <span class="ot">&lt;-</span> out[,<span class="st">"I"</span>] <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb28-11"><a href=""></a></span>
+<span id="cb28-12"><a href=""></a>  <span class="co"># Negative Binomial negative log-likelihood</span></span>
+<span id="cb28-13"><a href=""></a>  nll <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">dnbinom</span>(data<span class="sc">$</span>observed, <span class="at">mu =</span> predicted, <span class="at">size =</span> phi, <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb28-14"><a href=""></a></span>
+<span id="cb28-15"><a href=""></a>  <span class="fu">return</span>(nll)</span>
+<span id="cb28-16"><a href=""></a>}</span>
+<span id="cb28-17"><a href=""></a></span>
+<span id="cb28-18"><a href=""></a><span class="co"># Fit NB model</span></span>
+<span id="cb28-19"><a href=""></a>fit_nb <span class="ot">&lt;-</span> <span class="fu">mle2</span>(nll_nb,</span>
+<span id="cb28-20"><a href=""></a>               <span class="at">start =</span> <span class="fu">list</span>(<span class="at">beta =</span> <span class="fl">0.2</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>, <span class="at">phi =</span> <span class="dv">10</span>),</span>
+<span id="cb28-21"><a href=""></a>               <span class="at">data =</span> <span class="fu">list</span>(<span class="at">data =</span> data),</span>
+<span id="cb28-22"><a href=""></a>               <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>,</span>
+<span id="cb28-23"><a href=""></a>               <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>),</span>
+<span id="cb28-24"><a href=""></a>               <span class="at">upper =</span> <span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="dv">100</span>))</span>
+<span id="cb28-25"><a href=""></a></span>
+<span id="cb28-26"><a href=""></a><span class="co"># Compare models</span></span>
+<span id="cb28-27"><a href=""></a><span class="fu">cat</span>(<span class="st">"Model Comparison:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model Comparison:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Poisson AIC:"</span>, <span class="fu">AIC</span>(fit_mle), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poisson AIC: 19650.9 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Negative Binomial AIC:"</span>, <span class="fu">AIC</span>(fit_nb), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Negative Binomial AIC: 3189.442 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Delta AIC:"</span>, <span class="fu">AIC</span>(fit_nb) <span class="sc">-</span> <span class="fu">AIC</span>(fit_mle), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Delta AIC: -16461.45 </code></pre>
+</div>
+</div>
+</section>
+<section id="strengths-of-maximum-likelihood" class="slide level2">
+<h2>Strengths of Maximum Likelihood</h2>
+<p><strong>Statistical Rigor:</strong></p>
+<ul>
+<li>Principled probabilistic framework</li>
+<li>Asymptotic optimality properties</li>
+<li>Natural uncertainty quantification</li>
+<li>Enables formal hypothesis testing</li>
+</ul>
+</section>
+<section id="practical-benefits-1" class="slide level2">
+<h2>Practical Benefits</h2>
+<ul>
+<li>Confidence intervals and standard errors</li>
+<li>Model comparison via AIC/BIC</li>
+<li>Handles different error structures</li>
+<li>Extensible to complex models</li>
+</ul>
+</section>
+<section id="limitations-of-maximum-likelihood" class="slide level2">
+<h2>Limitations of Maximum Likelihood</h2>
+<p><strong>Computational Challenges:</strong></p>
+<ul>
+<li>More complex than least squares</li>
+<li>Requires optimization algorithms</li>
+<li>Can get stuck in local minima</li>
+<li>Sensitive to starting values</li>
+</ul>
+</section>
+<section id="statistical-assumptions" class="slide level2">
+<h2>Statistical Assumptions</h2>
+<ul>
+<li>Requires specification of error distribution</li>
+<li>Assumes model structure is correct</li>
+<li>Asymptotic properties may not hold</li>
+<li>Can be sensitive to outliers</li>
+</ul>
+</section>
+<section id="identifiability-issues" class="slide level2">
+<h2>Identifiability Issues</h2>
+<ul>
+<li>Still suffers from parameter identifiability</li>
+<li>Profile likelihood can be computationally expensive</li>
+<li>May not converge for complex models</li>
+</ul>
+</section></section>
+<section>
+<section id="part-v-comparison-of-methods" class="title-slide slide level1 center">
+<h1>Part V: Comparison of Methods</h1>
+
+</section>
+<section id="when-to-use-each-method" class="slide level2">
+<h2>When to Use Each Method</h2>
+<p><strong>Use Least Squares When:</strong></p>
+<ul>
+<li>Quick exploratory analysis needed</li>
+<li>Getting initial parameter estimates</li>
+<li>Computational speed is critical</li>
+<li>Simple error structure assumed</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Use Maximum Likelihood When:</strong></p>
+<ul>
+<li>Uncertainty quantification needed</li>
+<li>Comparing different models</li>
+<li>Formal statistical inference required</li>
+<li>Complex error structures present</li>
+<li>Publication-quality results needed</li>
+</ul>
+<!-- ------------------------------------------------------------------------ -->
+<!-- ## Practical Example: COVID-19 Fitting -->
+<!-- ```{r covid-comparison, echo=TRUE, fig.width=12, fig.height=8} -->
+<!-- # Simulate more realistic COVID-19 data -->
+<!-- set.seed(123) -->
+<!-- covid_times <- 1:100 -->
+<!-- covid_true_beta <- 0.25 -->
+<!-- covid_true_gamma <- 0.1 -->
+<!-- covid_true_R0 <- covid_true_beta / covid_true_gamma -->
+<!-- # Simulate with time-varying transmission -->
+<!-- beta_t <- covid_true_beta * (1 + 0.3 * sin(covid_times * 0.1)) -->
+<!-- out_covid <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
+<!--                  times = covid_times, -->
+<!--                  func = sir_model, -->
+<!--                  parms = c(beta = covid_true_beta, gamma = covid_true_gamma)) -->
+<!-- # Add realistic noise -->
+<!-- covid_observed <- rnbinom(length(covid_times), -->
+<!--                          mu = out_covid[,"I"] * 10000, -->
+<!--                          size = 5) -->
+<!-- # Fit both methods -->
+<!-- covid_data <- data.frame(time = covid_times, observed = covid_observed) -->
+<!-- # Least Squares -->
+<!-- ls_fit <- optim(c(0.02, 0.5), sse_function, data = covid_data) -->
+<!-- ls_params <- ls_fit$par -->
+<!-- # Maximum Likelihood -->
+<!-- mle_fit <- mle2(nll_function, -->
+<!--                 start = list(beta = 0.02, gamma = 0.5), -->
+<!--                 data = list(data = covid_data)) -->
+<!-- mle_params <- coef(mle_fit) -->
+<!-- mle_se <- sqrt(diag(vcov(mle_fit))) -->
+<!-- # Compare results -->
+<!-- comparison_df <- data.frame( -->
+<!--   Method = c("True", "Least Squares", "Maximum Likelihood"), -->
+<!--   Beta = c(covid_true_beta, ls_params[1], mle_params[1]), -->
+<!--   Gamma = c(covid_true_gamma, ls_params[2], mle_params[2]), -->
+<!--   R0 = c(covid_true_R0, ls_params[1]/ls_params[2], mle_params[1]/mle_params[2]) -->
+<!-- ) -->
+<!-- print(comparison_df) -->
+<!-- ``` -->
+<!-- ------------------------------------------------------------------------ -->
+<!-- ## Visual Comparison of Fits -->
+<!-- ```{r visual-comparison, echo=TRUE, fig.width=12, fig.height=8} -->
+<!-- # Generate predictions from both methods -->
+<!-- ls_pred <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
+<!--                times = covid_times, -->
+<!--                func = sir_model, -->
+<!--                parms = c(beta = ls_params[1], gamma = ls_params[2]) -->
+<!--                ) -->
+<!-- mle_pred <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
+<!--                 times = covid_times, -->
+<!--                 func = sir_model, -->
+<!--                 parms = c(beta = unname(mle_params[1]), gamma = unname(mle_params[2])) -->
+<!--                 ) -->
+<!-- # Create comparison plot -->
+<!-- plot_data <- data.frame( -->
+<!--   time = covid_times, -->
+<!--   observed = covid_observed, -->
+<!--   true_model = out_covid[,"I"] * 10000, -->
+<!--   ls_fit = ls_pred[,"I"] * 10000, -->
+<!--   mle_fit = mle_pred[,"I"] * 10000 -->
+<!-- ) -->
+<!-- library(ggplot2) -->
+<!-- ggplot(plot_data, aes(x = time)) + -->
+<!--   geom_point(aes(y = observed), color = "red", alpha = 0.6, size = 1) + -->
+<!--   geom_line(aes(y = true_model), color = "black", linewidth = 1.5) + -->
+<!--   geom_line(aes(y = ls_fit), color = "blue", linetype = 1, linetype = "dashed") + -->
+<!--   geom_line(aes(y = mle_fit), color = "green", linetype = 1, linetype = "dotted") + -->
+<!--   labs(x = "Time (days)", y = "Daily Cases", -->
+<!--        title = "Comparison of Fitting Methods") + -->
+<!--   scale_color_manual(values = c("red", "black", "blue", "green")) + -->
+<!--   theme_minimal() + -->
+<!--   theme(legend.position = "bottom") -->
+<!-- ``` -->
+</section></section>
+<section>
+<section id="part-vi-advanced-methods" class="title-slide slide level1 center">
+<h1>Part VI: Advanced Methods</h1>
+
+</section>
+<section id="beyond-least-squares-and-mle" class="slide level2">
+<h2>Beyond Least Squares and MLE</h2>
+<p><strong>Why We Need Advanced Methods:</strong></p>
+<ul>
+<li>Parameter identifiability issues</li>
+<li>Complex error structures</li>
+<li>Model uncertainty</li>
+<li>Computational challenges</li>
+<li>Real-time fitting requirements</li>
+</ul>
+</section>
+<section id="advanced-approaches" class="slide level2 scrollable">
+<h2>Advanced Approaches</h2>
+<ol type="1">
+<li><strong>Bayesian Methods</strong> (MCMC)</li>
+<li><strong>Particle Filtering</strong></li>
+<li><strong>Approximate Bayesian Computation (ABC)</strong></li>
+<li><strong>Ensemble Methods</strong></li>
+</ol>
+</section>
+<section id="bayesian-methods-mcmc" class="slide level2">
+<h2>Bayesian Methods: MCMC</h2>
+<p><strong>Core Idea:</strong> Treat parameters as random variables with prior distributions</p>
+<p><strong>Bayes’ Theorem:</strong> <span class="math display">\[P(\theta | \mathbf{y}) = \frac{P(\mathbf{y} | \theta) P(\theta)}{P(\mathbf{y})}\]</span></p>
+</section>
+<section id="advantages" class="slide level2">
+<h2>Advantages</h2>
+<ul>
+<li>Natural uncertainty quantification</li>
+<li>Incorporates prior knowledge</li>
+<li>Handles parameter identifiability</li>
+<li>Model comparison via Bayes factors</li>
+</ul>
+</section>
+<section id="example-with-stan" class="slide level2">
+<h2>Example with Stan</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># Stan model for SIR fitting</span></span>
+<span id="cb36-2"><a href=""></a>stan_code <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb36-3"><a href=""></a><span class="st">data {</span></span>
+<span id="cb36-4"><a href=""></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb36-5"><a href=""></a><span class="st">  vector[N] time;</span></span>
+<span id="cb36-6"><a href=""></a><span class="st">  int&lt;lower=0&gt; cases[N];</span></span>
+<span id="cb36-7"><a href=""></a><span class="st">  real&lt;lower=0&gt; S0;</span></span>
+<span id="cb36-8"><a href=""></a><span class="st">  real&lt;lower=0&gt; I0;</span></span>
+<span id="cb36-9"><a href=""></a><span class="st">  real&lt;lower=0&gt; R0;</span></span>
+<span id="cb36-10"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-11"><a href=""></a></span>
+<span id="cb36-12"><a href=""></a><span class="st">parameters {</span></span>
+<span id="cb36-13"><a href=""></a><span class="st">  real&lt;lower=0&gt; beta;</span></span>
+<span id="cb36-14"><a href=""></a><span class="st">  real&lt;lower=0&gt; gamma;</span></span>
+<span id="cb36-15"><a href=""></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb36-16"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-17"><a href=""></a></span>
+<span id="cb36-18"><a href=""></a><span class="st">model {</span></span>
+<span id="cb36-19"><a href=""></a><span class="st">  // Priors</span></span>
+<span id="cb36-20"><a href=""></a><span class="st">  beta ~ normal(0.3, 0.1);</span></span>
+<span id="cb36-21"><a href=""></a><span class="st">  gamma ~ normal(0.1, 0.05);</span></span>
+<span id="cb36-22"><a href=""></a><span class="st">  sigma ~ exponential(1);</span></span>
+<span id="cb36-23"><a href=""></a></span>
+<span id="cb36-24"><a href=""></a><span class="st">  // Likelihood</span></span>
+<span id="cb36-25"><a href=""></a><span class="st">  for(i in 1:N) {</span></span>
+<span id="cb36-26"><a href=""></a><span class="st">    // Solve ODE (simplified)</span></span>
+<span id="cb36-27"><a href=""></a><span class="st">    real S = S0 * exp(-beta * I0 * time[i]);</span></span>
+<span id="cb36-28"><a href=""></a><span class="st">    real I = I0 * exp((beta * S0 - gamma) * time[i]);</span></span>
+<span id="cb36-29"><a href=""></a><span class="st">    cases[i] ~ normal(I * 1000, sigma);</span></span>
+<span id="cb36-30"><a href=""></a><span class="st">  }</span></span>
+<span id="cb36-31"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-32"><a href=""></a><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="particle-filtering" class="slide level2">
+<h2>Particle Filtering</h2>
+<p><strong>Core Idea:</strong> Sequential Monte Carlo method for state-space models</p>
+<p><strong>When to Use:</strong></p>
+<ul>
+<li>Real-time parameter estimation</li>
+<li>State estimation in stochastic models</li>
+<li>Handling of missing data</li>
+<li>Time-varying parameters</li>
+</ul>
+</section>
+<section id="advantages-1" class="slide level2">
+<h2>Advantages</h2>
+<ul>
+<li>Handles stochasticity naturally</li>
+<li>Real-time updates</li>
+<li>No assumption of constant parameters</li>
+<li>Robust to model misspecification</li>
+</ul>
+</section>
+<section id="example-application" class="slide level2">
+<h2>Example Application</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># Particle filter for SIR model</span></span>
+<span id="cb37-2"><a href=""></a><span class="fu">library</span>(pomp)</span>
+<span id="cb37-3"><a href=""></a></span>
+<span id="cb37-4"><a href=""></a><span class="co"># Define SIR model with stochasticity</span></span>
+<span id="cb37-5"><a href=""></a>sir_pomp <span class="ot">&lt;-</span> <span class="fu">pomp</span>(</span>
+<span id="cb37-6"><a href=""></a>  <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> covid_times, <span class="at">cases =</span> covid_observed),</span>
+<span id="cb37-7"><a href=""></a>  <span class="at">times =</span> <span class="st">"time"</span>,</span>
+<span id="cb37-8"><a href=""></a>  <span class="at">t0 =</span> <span class="dv">0</span>,</span>
+<span id="cb37-9"><a href=""></a>  <span class="at">rprocess =</span> <span class="fu">euler.sim</span>(</span>
+<span id="cb37-10"><a href=""></a>    <span class="at">step.fun =</span> <span class="st">"sir_step"</span>,</span>
+<span id="cb37-11"><a href=""></a>    <span class="at">delta.t =</span> <span class="fl">0.1</span></span>
+<span id="cb37-12"><a href=""></a>  ),</span>
+<span id="cb37-13"><a href=""></a>  <span class="at">rmeasure =</span> <span class="st">"cases_measure"</span>,</span>
+<span id="cb37-14"><a href=""></a>  <span class="at">dmeasure =</span> <span class="st">"cases_dmeasure"</span>,</span>
+<span id="cb37-15"><a href=""></a>  <span class="at">initializer =</span> <span class="st">"sir_init"</span>,</span>
+<span id="cb37-16"><a href=""></a>  <span class="at">paramnames =</span> <span class="fu">c</span>(<span class="st">"beta"</span>, <span class="st">"gamma"</span>, <span class="st">"sigma"</span>),</span>
+<span id="cb37-17"><a href=""></a>  <span class="at">statenames =</span> <span class="fu">c</span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>)</span>
+<span id="cb37-18"><a href=""></a>)</span>
+<span id="cb37-19"><a href=""></a></span>
+<span id="cb37-20"><a href=""></a><span class="co"># Run particle filter</span></span>
+<span id="cb37-21"><a href=""></a>pf <span class="ot">&lt;-</span> <span class="fu">pfilter</span>(sir_pomp, <span class="at">Np =</span> <span class="dv">1000</span>, <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.3</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>, <span class="at">sigma =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="approximate-bayesian-computation-abc" class="slide level2">
+<h2>Approximate Bayesian Computation (ABC)</h2>
+<p><strong>Core Idea:</strong> Approximate posterior without likelihood evaluation</p>
+<p><strong>When to Use:</strong></p>
+<ul>
+<li>Complex likelihoods</li>
+<li>Intractable models</li>
+<li>High-dimensional parameter spaces</li>
+<li>Model comparison</li>
+</ul>
+</section>
+<section class="slide level2 scrollable">
+
+<p><strong>Algorithm:</strong></p>
+<ol type="1">
+<li>Sample parameters from prior</li>
+<li>Simulate data from model</li>
+<li>Compare simulated to observed data</li>
+<li>Accept if distance &lt; threshold</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>No likelihood required</li>
+<li>Handles complex models</li>
+<li>Model comparison</li>
+<li>Intuitive approach</li>
+</ul>
+</section>
+<section id="ensemble-methods" class="slide level2">
+<h2>Ensemble Methods</h2>
+<p><strong>Core Idea:</strong> Combine multiple models or methods</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Model Ensembles</strong>: Average predictions from different models</li>
+<li><strong>Method Ensembles</strong>: Combine LS, MLE, MCMC results</li>
+<li><strong>Bootstrap Ensembles</strong>: Multiple fits with resampled data</li>
+</ul>
+</section>
+<section id="advantages-2" class="slide level2">
+<h2>Advantages:</h2>
+<ul>
+<li>Reduces overfitting</li>
+<li>Quantifies model uncertainty</li>
+<li>More robust predictions</li>
+<li>Handles model selection uncertainty</li>
+</ul>
+</section></section>
+<section>
+<section id="part-vii-practical-considerations" class="title-slide slide level1 center">
+<h1>Part VII: Practical Considerations</h1>
+
+</section>
+<section id="common-fitting-problems" class="slide level2">
+<h2>Common Fitting Problems</h2>
+<p><strong>Convergence Issues:</strong></p>
+<ul>
+<li>Poor starting values</li>
+<li>Flat likelihood surfaces</li>
+<li>Numerical instabilities</li>
+<li>Parameter bounds</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Identifiability Problems:</strong></p>
+<ul>
+<li>Multiple solutions</li>
+<li>Correlated parameters</li>
+<li>Insufficient data</li>
+<li>Model overparameterization</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Multiple starting points</li>
+<li>Profile likelihood</li>
+<li>Data augmentation</li>
+</ul>
+</section>
+<section id="troubleshooting-guide" class="slide level2 scrollable">
+<h2>Troubleshooting Guide</h2>
+<p><strong>If Optimization Fails:</strong></p>
+<ol type="1">
+<li>Check starting values</li>
+<li>Verify parameter bounds</li>
+<li>Examine objective function</li>
+<li>Try different algorithms</li>
+<li>Simplify the model</li>
+</ol>
+</section>
+<section class="slide level2 scrollable">
+
+<p><strong>If Parameters Are Unidentifiable:</strong></p>
+<ol type="1">
+<li>Fix some parameters</li>
+<li>Use additional data</li>
+<li>Add regularization</li>
+<li>Consider model reduction</li>
+<li>Use prior information</li>
+</ol>
+</section>
+<section class="slide level2 scrollable">
+
+<p><strong>If Results Are Unrealistic:</strong></p>
+<ol type="1">
+<li>Check model assumptions</li>
+<li>Verify data quality</li>
+<li>Examine residuals</li>
+<li>Test sensitivity</li>
+<li>Consider alternative models</li>
+</ol>
+</section>
+<section id="best-practices" class="slide level2">
+<h2>Best Practices</h2>
+<p><strong>Before Fitting:</strong></p>
+<ul>
+<li>Understand your data</li>
+<li>Check model assumptions</li>
+<li>Set realistic parameter bounds</li>
+<li>Prepare multiple starting values</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>During Fitting:</strong></p>
+<ul>
+<li>Monitor convergence</li>
+<li>Check for local minima</li>
+<li>Validate results</li>
+<li>Document everything</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>After Fitting:</strong></p>
+<ul>
+<li>Assess goodness of fit</li>
+<li>Quantify uncertainty</li>
+<li>Test sensitivity</li>
+<li>Validate predictions</li>
+</ul>
+</section>
+<section id="software-recommendations" class="slide level2">
+<h2>Software Recommendations</h2>
+<p><strong>R Packages:</strong></p>
+<ul>
+<li><code>bbmle</code>: Maximum likelihood</li>
+<li><code>rstan</code>: Bayesian inference</li>
+<li><code>pomp</code>: Particle filtering</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Specialized Software:</strong></p>
+<ul>
+<li><code>Stan</code>: Probabilistic programming</li>
+<li><code>JAGS</code>: Bayesian analysis</li>
+<li><code>PyMC</code>: Bayesian inference</li>
+</ul>
+</section></section>
+<section>
+<section id="part-viii-conclusions" class="title-slide slide level1 center">
+<h1>Part VIII: Conclusions</h1>
+
+</section>
+<section id="key-takeaways" class="slide level2">
+<h2>Key Takeaways</h2>
+<p><strong>Least Squares:</strong></p>
+<ul>
+<li>Fast and intuitive</li>
+<li>Good for exploration</li>
+<li>Limited uncertainty quantification</li>
+<li>Sensitive to assumptions</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Maximum Likelihood:</strong></p>
+<ul>
+<li>Principled statistical framework</li>
+<li>Natural uncertainty quantification</li>
+<li>Enables model comparison</li>
+<li>More computationally intensive</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Advanced Methods:</strong></p>
+<ul>
+<li>Handle complex scenarios</li>
+<li>Provide robust uncertainty</li>
+<li>Require more expertise</li>
+<li>Often computationally expensive</li>
+</ul>
+</section>
+<section id="choosing-the-right-method" class="slide level2">
+<h2>Choosing the Right Method</h2>
+<p><strong>For Quick Exploration:</strong> Least Squares</p>
+<p><strong>For Publication:</strong> Maximum Likelihood</p>
+<p><strong>For Complex Models:</strong> Bayesian Methods</p>
+<p><strong>For Real-time:</strong> Particle Filtering</p>
+<p><strong>For Model Comparison:</strong> ABC or MCMC</p>
+<p><strong>General Principle:</strong> Start simple, add complexity as needed</p>
+</section>
+<section id="final-thoughts" class="slide level2">
+<h2>Final Thoughts</h2>
+<p><strong>Model fitting is both art and science:</strong></p>
+<ul>
+<li>Requires domain expertise</li>
+<li>Demands statistical rigor</li>
+<li>Benefits from computational tools</li>
+<li>Needs careful validation</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>The goal is not just to fit models, but to:</strong></p>
+<ul>
+<li>Understand disease dynamics</li>
+<li>Make reliable predictions</li>
+<li>Inform policy decisions</li>
+<li>Advance scientific knowledge</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="fragment" style="font-size: 450%">
+<p>Any Questions?</p>
+</div>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<ul>
+<li>Anderson, R.M. and May, R.M. (1991). <em>Infectious Diseases of Humans: Dynamics and Control</em>. Oxford University Press.</li>
+<li>Keeling, M.J. and Rohani, P. (2008). <em>Modeling Infectious Diseases in Humans and Animals</em>. Princeton University Press.</li>
+<li>Bolker, B. (2008). <em>Ecological Models and Data in R</em>. Princeton University Press.</li>
+<li>King, A.A. et al.&nbsp;(2016). “Statistical inference for partially observed Markov processes via the R package pomp.” <em>Journal of Statistical Software</em>.</li>
+<li>Carpenter, B. et al.&nbsp;(2017). “Stan: A probabilistic programming language.” <em>Journal of Statistical Software</em>.</li>
+</ul>
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>
-</section>
+</div>
+</section></section>
     </div>
   </div>
 
@@ -361,6 +1514,7 @@ Author name
   <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -377,12 +1531,12 @@ Author name
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -508,7 +1662,7 @@ Author name
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -553,7 +1707,7 @@ Author name
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
@@ -632,18 +1786,7 @@ Author name
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -675,11 +1818,50 @@ Author name
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
-      function tippyHover(el, contentFn) {
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -689,8 +1871,17 @@ Author name
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -704,7 +1895,11 @@ Author name
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {
@@ -746,6 +1941,38 @@ Author name
       }
     });
     </script>
+    <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false});
+    (function() {
+      let previousOnload = window.onload;
+      window.onload = () => {
+        if (previousOnload) {
+          previousOnload();
+        }
+        lightboxQuarto.on('slide_before_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          const href = trigger.getAttribute('href');
+          if (href !== null) {
+            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+            if (imgEl !== null) {
+              const srcAttr = imgEl.getAttribute("src");
+              if (srcAttr && srcAttr.startsWith("data:")) {
+                slideConfig.href = srcAttr;
+              }
+            }
+          } 
+        });
+      
+        lightboxQuarto.on('slide_after_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(slideNode);
+          }
+        });
+      
+      };
+      
+    })();
+              </script>
     
 
 </body></html>
