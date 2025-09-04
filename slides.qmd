@@ -1152,6 +1152,7 @@ Any Questions?
 
 - [Introduction to the Concept of Likelihood and Its Applications](https://journals.sagepub.com/doi/10.1177/2515245917744314)
 - _Key considerations for model fitting and calibration_: [Choices and trade-offs in inference with infectious disease models](https://www.sciencedirect.com/science/article/pii/S1755436519300441?via%3Dihub)
+- _A compilation of model fitting tutorials_: [Tooling-up for infectious disease transmission modelling](https://www.sciencedirect.com/science/article/pii/S1755436520300220)
 
 ------------------------------------------------------------------------
 
