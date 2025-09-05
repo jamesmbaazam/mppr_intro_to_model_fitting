@@ -1,0 +1,22 @@
+# Comparison of Methods
+
+------------------------------------------------------------------------
+
+## When to Use Each Method
+
+**Use Least Squares When:**
+
+-   Quick exploratory analysis needed
+-   Getting initial parameter estimates
+-   Computational speed is critical
+-   Simple error structure assumed
+
+------------------------------------------------------------------------
+
+**Use Maximum Likelihood When:**
+
+-   Uncertainty quantification needed
+-   Comparing different models
+-   Formal statistical inference required
+-   Complex error structures present
+-   Publication-quality results needed

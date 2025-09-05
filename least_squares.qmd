@@ -1,0 +1,239 @@
+# Least Squares Estimation
+
+------------------------------------------------------------------------
+
+## Least Squares: The Intuitive Approach
+
+**<span style="color: #FFFF00;">Core Idea:</span>** Minimize the sum of squared differences between model predictions and observations
+
+------------------------------------------------------------------------
+
+**Mathematical Formulation:** $$\text{SSE} = \sum_{i=1}^{n} (y_i - f(t_i, \theta))^2$$
+
+Where:
+
+- $y_i$ = observed value at time $t_i$
+- $f(t_i, \theta)$ = model prediction at time $t_i$
+- $\theta$ = parameter vector
+
+------------------------------------------------------------------------
+
+### Why Squared Errors?
+
+**<span style="color: #FFFF00;">Advantages:</span>**
+
+-   <span style="color: #FFFF00;">Penalizes large errors more heavily</span>
+-   <span style="color: #FFFF00;">Differentiable (smooth optimization)</span>
+-   <span style="color: #FFFF00;">Mathematically tractable</span>
+-   <span style="color: #FFFF00;">Gives maximum likelihood estimates when errors are normal distributed</span>
+
+------------------------------------------------------------------------
+
+### <span style="color: tomato;">Disadvantages</span>
+
+-   <span style="color: tomato;">Sensitive to outliers</span>
+-   <span style="color: tomato;">Assumes constant variance</span>
+-   <span style="color: tomato;">No probabilistic interpretation</span>
+
+------------------------------------------------------------------------
+
+## Least Squares Example: SIR Model
+
+```{r ls-example, echo=FALSE, fig.width=10, fig.height=6}
+# Load required packages
+library(deSolve)
+library(ggplot2)
+
+# Define SIR model
+sir_model <- function(t, y, params) {
+  with(as.list(c(y, params)), {
+    dS <- -beta * S * I
+    dI <- beta * S * I - gamma * I
+    dR <- gamma * I
+    list(c(dS, dI, dR))
+  })
+}
+
+# Generate synthetic data
+set.seed(42)
+true_params <- c(beta = 0.3, gamma = 0.1)
+init_conds <- c(S = 0.99, I = 0.01, R = 0)
+times <- seq(0, 365, by = 1)
+
+# Simulate true model
+out <- ode(y = init_conds, times = times, func = sir_model, parms = true_params)
+true_cases <- out[,"I"] * 1000  # Scale to cases
+
+# Add noise
+observed_cases <- rpois(length(times), true_cases + 5)
+
+# Plot
+plot_data <- data.frame(
+  time = times,
+  observed = observed_cases,
+  true_model = true_cases
+)
+
+ggplot(plot_data, aes(x = time)) +
+  geom_point(aes(y = observed), color = "red", alpha = 0.7) +
+  geom_line(aes(y = true_model), color = "blue", size = 1) +
+  labs(x = "Time (days)", y = "Number of Cases",
+       title = "SIR Model: True vs Observed Data") +
+  theme_minimal()
+```
+
+------------------------------------------------------------------------
+
+## Implementing Least Squares
+
+```{r ls-implementation, echo=TRUE}
+# Define objective function
+sse_function <- function(params, data) {
+  beta <- params[1]
+  gamma <- params[2]
+  
+  # Simulate model
+  out <- ode(
+    y = init_conds,
+    times = data$time,
+    func = sir_model,
+    parms = c(beta = beta, gamma = gamma)
+  )
+  
+  # Calculate sum of squared errors
+  predicted <- out[, "I"] * 1000
+  sse <- sum((data$observed - predicted)^2)
+  
+  return(sse)
+}
+
+# Prepare data
+data <- data.frame(time = times, observed = observed_cases)
+
+# Test different parameter values
+test_params <- expand.grid(
+  beta = seq(0.1, 0.5, length.out = 10),
+  gamma = seq(0.05, 0.2, length.out = 10)
+)
+
+# Calculate SSE for each combination
+for(i in 1:nrow(test_params)){
+  test_params$sse[i] <- sse_function(
+    c(
+      test_params[i, 1],
+      test_params[i, 2]
+    ),
+    data
+  )
+}
+
+# Find minimum
+best_idx <- which.min(test_params$sse)
+best_params <- test_params[best_idx, ]
+cat("True parameters: Beta =", true_params[1], ", Gamma =", true_params[2])
+cat("Best fit parameters: Beta =", round(best_params$beta, 3), ", Gamma =", round(best_params$gamma, 3), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Strengths of Least Squares
+
+**Computational Advantages:**
+
+-   Fast and efficient
+-   Well-established algorithms
+-   Easy to implement
+-   Good for initial parameter estimates
+
+------------------------------------------------------------------------
+
+## Statistical Properties
+
+-   Unbiased estimates (under certain conditions)
+-   Minimum variance among linear unbiased estimators
+-   Maximum likelihood when errors are normal
+
+------------------------------------------------------------------------
+
+## Practical Benefits
+
+-   Intuitive interpretation
+-   Widely understood
+-   Good starting point for more complex methods
+
+------------------------------------------------------------------------
+
+## Limitations of Least Squares
+
+**Statistical Limitations:**
+
+-   Limited uncertainty quantification
+-   Assumes constant variance
+-   Sensitive to outliers
+-   No probabilistic framework
+
+------------------------------------------------------------------------
+
+## Practical Limitations
+
+**Practical Limitations:**
+
+-   Parameter identifiability issues
+-   No confidence intervals
+-   Difficult to compare models
+-   Assumes measurement error only
+
+------------------------------------------------------------------------
+
+## Example Problem
+
+```{r ls-limitation, echo=TRUE, fig.width=10, fig.height=6}
+# Show how different parameter combinations can give similar fits
+param_combos <- data.frame(
+  beta = c(0.25, 0.35, 0.30),
+  gamma = c(0.08, 0.12, 0.10),
+  label = c("Low β, Low γ", "High β, High γ", "True")
+)
+
+# Plot different fits
+ggplot(plot_data, aes(x = time)) +
+  geom_point(aes(y = observed), color = "red", alpha = 0.7) +
+  geom_line(aes(y = true_model), color = "blue", linetype = 1) +
+  labs(x = "Time (days)", y = "Number of Cases",
+       title = "Multiple Parameter Sets Can Give Similar Fits") +
+  theme_minimal()
+
+# Add lines for different parameter combinations
+out_test <- ode(
+    y = init_conds,
+    times = times,
+    func = sir_model,
+    parms = c(beta = param_combos$beta[1],
+              gamma = param_combos$gamma[1]
+    ))
+
+plot(times, out_test[, "I"] * 1000,
+     col = c("green", "orange", "purple")[1],
+     lty = 2, lwd = 2
+)
+
+for(i in 2:nrow(param_combos)) {
+  out_test <- ode(
+    y = init_conds,
+    times = times,
+    func = sir_model,
+    parms = c(beta = param_combos$beta[i],
+              gamma = param_combos$gamma[i]
+    ))
+  lines(times, out_test[, "I"] * 1000,
+        col = c("green", "orange", "purple")[i],
+        lty = 2, lwd = 2
+  )
+}
+```
+
+------------------------------------------------------------------------
+
+## R implementation practicals {background-color="#447099" transition="fade-in"}
+
+- Let's turn to the [tutorials](https://github.com/jamesmbaazam/mppr_intro_to_fitting_practicals)

@@ -7,14 +7,14 @@
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="slides_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="slides_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.43">
 
   <meta name="author" content="James Mba Azam, PhD">
-  <meta name="dcterms.date" content="2025-09-04">
+  <meta name="dcterms.date" content="2025-09-05">
   <title>Introduction to Model Fitting and Calibration</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -60,44 +60,44 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #f8f8f2;  }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -393,7 +393,7 @@
     }
   </style>
 </head>
-<body class="quarto-light">
+<body class="quarto-dark">
   <div class="reveal">
     <div class="slides">
 
@@ -415,19 +415,19 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
     </div>
 </div>
 
-  <p class="date">2025-09-04</p>
+  <p class="date">2025-09-05</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of contents</h2>
 <ul>
-<li><a href="#/part-i-introduction-motivation" id="/toc-part-i-introduction-motivation">Part I: Introduction &amp; Motivation</a></li>
-<li><a href="#/part-ii-conceptual-foundations" id="/toc-part-ii-conceptual-foundations">Part II: Conceptual Foundations</a></li>
-<li><a href="#/part-iii-least-squares-estimation" id="/toc-part-iii-least-squares-estimation">Part III: Least Squares Estimation</a></li>
-<li><a href="#/part-iv-maximum-likelihood-estimation" id="/toc-part-iv-maximum-likelihood-estimation">Part IV: Maximum Likelihood Estimation</a></li>
-<li><a href="#/part-v-comparison-of-methods" id="/toc-part-v-comparison-of-methods">Part V: Comparison of Methods</a></li>
-<li><a href="#/part-vi-advanced-methods" id="/toc-part-vi-advanced-methods">Part VI: Advanced Methods</a></li>
-<li><a href="#/part-vii-practical-considerations" id="/toc-part-vii-practical-considerations">Part VII: Practical Considerations</a></li>
-<li><a href="#/part-viii-conclusions" id="/toc-part-viii-conclusions">Part VIII: Conclusions</a></li>
+<li><a href="#/introduction-motivation" id="/toc-introduction-motivation">Introduction &amp; Motivation</a></li>
+<li><a href="#/conceptual-foundations" id="/toc-conceptual-foundations">Conceptual Foundations</a></li>
+<li><a href="#/least-squares-estimation" id="/toc-least-squares-estimation">Least Squares Estimation</a></li>
+<li><a href="#/maximum-likelihood-estimation" id="/toc-maximum-likelihood-estimation">Maximum Likelihood Estimation</a></li>
+<li><a href="#/comparison-of-methods" id="/toc-comparison-of-methods">Comparison of Methods</a></li>
+<li><a href="#/advanced-methods" id="/toc-advanced-methods">Advanced Methods</a></li>
+<li><a href="#/practical-considerations" id="/toc-practical-considerations">Practical Considerations</a></li>
+<li><a href="#/conclusions" id="/toc-conclusions">Conclusions</a></li>
 </ul>
 </nav>
 </section>
@@ -444,8 +444,8 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </ul>
 </section>
 <section>
-<section id="part-i-introduction-motivation" class="title-slide slide level1 center">
-<h1>Part I: Introduction &amp; Motivation</h1>
+<section id="introduction-motivation" class="title-slide slide level1 center">
+<h1>Introduction &amp; Motivation</h1>
 
 </section>
 <section id="why-model-fitting-matters" class="slide level2">
@@ -462,9 +462,9 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 
 <h3 id="the-goal">The Goal</h3>
 <ul>
-<li><span style="color: blue;">Find parameter values that make our model predictions match observed data</span></li>
-<li><span style="color: blue;">Quantify uncertainty in our estimates</span></li>
-<li><span style="color: blue;">Make reliable predictions and policy recommendations</span></li>
+<li><span style="color: #FFFF00;">Find parameter values that make our model predictions match observed data</span></li>
+<li><span style="color: #FFFF00;">Quantify uncertainty in our estimates</span></li>
+<li><span style="color: #FFFF00;">Make reliable predictions and policy recommendations</span></li>
 </ul>
 </section>
 <section id="example-outbreak-data" class="slide level2">
@@ -492,21 +492,21 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 
 <h3 id="stochastic-methods">Stochastic Methods</h3>
 <ul>
-<li><strong><span style="color: blue;">Markov Chain Monte Carlo (MCMC)</span></strong></li>
-<li><strong><span style="color: blue;">Sequential Monte Carlo (SMC)</span></strong></li>
-<li><strong><span style="color: blue;">Particle MCMC (pMCMC)</span></strong></li>
-<li><strong><span style="color: blue;">Approximate Bayesian Computation (ABC)</span></strong></li>
+<li><strong><span style="color: #FFFF00;">Markov Chain Monte Carlo (MCMC)</span></strong></li>
+<li><strong><span style="color: #FFFF00;">Sequential Monte Carlo (SMC)</span></strong></li>
+<li><strong><span style="color: #FFFF00;">Particle MCMC (pMCMC)</span></strong></li>
+<li><strong><span style="color: #FFFF00;">Approximate Bayesian Computation (ABC)</span></strong></li>
 </ul>
 <p><strong><span style="color: tomato;">Today’s Focus:</span></strong> Least Squares and MLE as foundations</p>
 </section></section>
 <section>
-<section id="part-ii-conceptual-foundations" class="title-slide slide level1 center">
-<h1>Part II: Conceptual Foundations</h1>
+<section id="conceptual-foundations" class="title-slide slide level1 center">
+<h1>Conceptual Foundations</h1>
 
 </section>
 <section id="what-is-model-fitting" class="slide level2">
 <h2>What is Model Fitting?</h2>
-<p><strong><span style="color: blue;">Definition:</span></strong> The process of finding parameter values that make a mathematical model’s predictions as close as possible to observed data.</p>
+<p><strong><span style="color: #FFFF00;">Definition:</span></strong> The process of finding parameter values that make a mathematical model’s predictions as close as possible to observed data.</p>
 </section>
 <section id="mathematical-formulation" class="slide level2">
 <h2>Mathematical Formulation</h2>
@@ -534,8 +534,8 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 <section id="key-quantities" class="slide level2">
 <h2>Key Quantities</h2>
 <ul>
-<li><span style="color: blue;"><span class="math inline">\(R_0 = \frac{\beta}{\gamma}\)</span> (basic reproduction number)</span></li>
-<li><span style="color: blue;">Infectious period = <span class="math inline">\(\frac{1}{\gamma}\)</span></span></li>
+<li><span style="color: #FFFF00;"><span class="math inline">\(R_0 = \frac{\beta}{\gamma}\)</span> (basic reproduction number)</span></li>
+<li><span style="color: #FFFF00;">Infectious period = <span class="math inline">\(\frac{1}{\gamma}\)</span></span></li>
 </ul>
 </section>
 <section id="sources-of-uncertainty" class="slide level2">
@@ -580,16 +580,16 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 <li>Low <span class="math inline">\(\beta\)</span>, low <span class="math inline">\(\gamma\)</span></li>
 </ul>
 <p>Both might give similar epidemic curves!</p>
-<p><strong><span style="color: blue;">Solution:</span></strong> Use additional information (e.g., known infectious period)</p>
+<p><strong><span style="color: #FFFF00;">Solution:</span></strong> Use additional information (e.g., known infectious period)</p>
 </section></section>
 <section>
-<section id="part-iii-least-squares-estimation" class="title-slide slide level1 center">
-<h1>Part III: Least Squares Estimation</h1>
+<section id="least-squares-estimation" class="title-slide slide level1 center">
+<h1>Least Squares Estimation</h1>
 
 </section>
 <section id="least-squares-the-intuitive-approach" class="slide level2">
 <h2>Least Squares: The Intuitive Approach</h2>
-<p><strong><span style="color: blue;">Core Idea:</span></strong> Minimize the sum of squared differences between model predictions and observations</p>
+<p><strong><span style="color: #FFFF00;">Core Idea:</span></strong> Minimize the sum of squared differences between model predictions and observations</p>
 </section>
 <section class="slide level2">
 
@@ -604,12 +604,12 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 <section class="slide level2">
 
 <h3 id="why-squared-errors">Why Squared Errors?</h3>
-<p><strong><span style="color: blue;">Advantages:</span></strong></p>
+<p><strong><span style="color: #FFFF00;">Advantages:</span></strong></p>
 <ul>
-<li><span style="color: blue;">Penalizes large errors more heavily</span></li>
-<li><span style="color: blue;">Differentiable (smooth optimization)</span></li>
-<li><span style="color: blue;">Mathematically tractable</span></li>
-<li><span style="color: blue;">Gives maximum likelihood estimates when errors are normal distributed</span></li>
+<li><span style="color: #FFFF00;">Penalizes large errors more heavily</span></li>
+<li><span style="color: #FFFF00;">Differentiable (smooth optimization)</span></li>
+<li><span style="color: #FFFF00;">Mathematically tractable</span></li>
+<li><span style="color: #FFFF00;">Gives maximum likelihood estimates when errors are normal distributed</span></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -800,18 +800,15 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 <ul>
 <li>Let’s turn to the <a href="https://github.com/jamesmbaazam/mppr_intro_to_fitting_practicals">tutorials</a></li>
 </ul>
-</section>
-<section class="slide level2">
-
 </section></section>
 <section>
-<section id="part-iv-maximum-likelihood-estimation" class="title-slide slide level1 center">
-<h1>Part IV: Maximum Likelihood Estimation</h1>
+<section id="maximum-likelihood-estimation" class="title-slide slide level1 center">
+<h1>Maximum Likelihood Estimation</h1>
 
 </section>
 <section id="maximum-likelihood-the-probabilistic-approach" class="slide level2">
 <h2>Maximum Likelihood: The Probabilistic Approach</h2>
-<p><strong><span style="color: blue;">Core Idea:</span></strong> Find parameter values that make the observed data most probable</p>
+<p><strong><span style="color: #FFFF00;">Core Idea:</span></strong> Find parameter values that make the observed data most probable</p>
 <p><strong>Mathematical Formulation:</strong> <span class="math display">\[\hat{\theta} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \prod_{i=1}^{n} f(y_i | \theta)\]</span></p>
 <p>Where: - <span class="math inline">\(L(\theta)\)</span> = likelihood function - <span class="math inline">\(f(y_i | \theta)\)</span> = probability density of observation <span class="math inline">\(i\)</span></p>
 </section>
@@ -821,12 +818,12 @@ James Mba Azam, PhD <a href="https://orcid.org/0000-0001-5782-7330" class="quart
 </section>
 <section id="why-maximum-likelihood" class="slide level2">
 <h2>Why Maximum Likelihood?</h2>
-<p><strong><span style="color: blue;">Theoretical Advantages:</span></strong></p>
+<p><strong><span style="color: #FFFF00;">Theoretical Advantages:</span></strong></p>
 <ul>
-<li><span style="color: blue;">Principled statistical framework</span></li>
-<li><span style="color: blue;">Provides uncertainty quantification</span></li>
-<li><span style="color: blue;">Enables model comparison (AIC, BIC)</span></li>
-<li><span style="color: blue;">Asymptotically optimal properties</span></li>
+<li><span style="color: #FFFF00;">Principled statistical framework</span></li>
+<li><span style="color: #FFFF00;">Provides uncertainty quantification</span></li>
+<li><span style="color: #FFFF00;">Enables model comparison (AIC, BIC)</span></li>
+<li><span style="color: #FFFF00;">Asymptotically optimal properties</span></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1041,10 +1038,16 @@ Comparison with True Values:</code></pre>
 <li>Profile likelihood can be computationally expensive</li>
 <li>May not converge for complex models</li>
 </ul>
+</section>
+<section id="r-implementation-practicals-1" class="slide level2" data-background-color="#447099" data-transition="fade-in">
+<h2>R implementation practicals</h2>
+<ul>
+<li>Let’s turn to the <a href="https://github.com/jamesmbaazam/mppr_intro_to_fitting_practicals">tutorials</a></li>
+</ul>
 </section></section>
 <section>
-<section id="part-v-comparison-of-methods" class="title-slide slide level1 center">
-<h1>Part V: Comparison of Methods</h1>
+<section id="comparison-of-methods" class="title-slide slide level1 center">
+<h1>Comparison of Methods</h1>
 
 </section>
 <section id="when-to-use-each-method" class="slide level2">
@@ -1067,88 +1070,15 @@ Comparison with True Values:</code></pre>
 <li>Complex error structures present</li>
 <li>Publication-quality results needed</li>
 </ul>
-<!-- ------------------------------------------------------------------------ -->
-<!-- ## Practical Example: COVID-19 Fitting -->
-<!-- ```{r covid-comparison, echo=TRUE, fig.width=12, fig.height=8} -->
-<!-- # Simulate more realistic COVID-19 data -->
-<!-- set.seed(123) -->
-<!-- covid_times <- 1:100 -->
-<!-- covid_true_beta <- 0.25 -->
-<!-- covid_true_gamma <- 0.1 -->
-<!-- covid_true_R0 <- covid_true_beta / covid_true_gamma -->
-<!-- # Simulate with time-varying transmission -->
-<!-- beta_t <- covid_true_beta * (1 + 0.3 * sin(covid_times * 0.1)) -->
-<!-- out_covid <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
-<!--                  times = covid_times, -->
-<!--                  func = sir_model, -->
-<!--                  parms = c(beta = covid_true_beta, gamma = covid_true_gamma)) -->
-<!-- # Add realistic noise -->
-<!-- covid_observed <- rnbinom(length(covid_times), -->
-<!--                          mu = out_covid[,"I"] * 10000, -->
-<!--                          size = 5) -->
-<!-- # Fit both methods -->
-<!-- covid_data <- data.frame(time = covid_times, observed = covid_observed) -->
-<!-- # Least Squares -->
-<!-- ls_fit <- optim(c(0.02, 0.5), sse_function, data = covid_data) -->
-<!-- ls_params <- ls_fit$par -->
-<!-- # Maximum Likelihood -->
-<!-- mle_fit <- mle2(nll_function, -->
-<!--                 start = list(beta = 0.02, gamma = 0.5), -->
-<!--                 data = list(data = covid_data)) -->
-<!-- mle_params <- coef(mle_fit) -->
-<!-- mle_se <- sqrt(diag(vcov(mle_fit))) -->
-<!-- # Compare results -->
-<!-- comparison_df <- data.frame( -->
-<!--   Method = c("True", "Least Squares", "Maximum Likelihood"), -->
-<!--   Beta = c(covid_true_beta, ls_params[1], mle_params[1]), -->
-<!--   Gamma = c(covid_true_gamma, ls_params[2], mle_params[2]), -->
-<!--   R0 = c(covid_true_R0, ls_params[1]/ls_params[2], mle_params[1]/mle_params[2]) -->
-<!-- ) -->
-<!-- print(comparison_df) -->
-<!-- ``` -->
-<!-- ------------------------------------------------------------------------ -->
-<!-- ## Visual Comparison of Fits -->
-<!-- ```{r visual-comparison, echo=TRUE, fig.width=12, fig.height=8} -->
-<!-- # Generate predictions from both methods -->
-<!-- ls_pred <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
-<!--                times = covid_times, -->
-<!--                func = sir_model, -->
-<!--                parms = c(beta = ls_params[1], gamma = ls_params[2]) -->
-<!--                ) -->
-<!-- mle_pred <- ode(y = c(S = 0.99, I = 0.01, R = 0), -->
-<!--                 times = covid_times, -->
-<!--                 func = sir_model, -->
-<!--                 parms = c(beta = unname(mle_params[1]), gamma = unname(mle_params[2])) -->
-<!--                 ) -->
-<!-- # Create comparison plot -->
-<!-- plot_data <- data.frame( -->
-<!--   time = covid_times, -->
-<!--   observed = covid_observed, -->
-<!--   true_model = out_covid[,"I"] * 10000, -->
-<!--   ls_fit = ls_pred[,"I"] * 10000, -->
-<!--   mle_fit = mle_pred[,"I"] * 10000 -->
-<!-- ) -->
-<!-- library(ggplot2) -->
-<!-- ggplot(plot_data, aes(x = time)) + -->
-<!--   geom_point(aes(y = observed), color = "red", alpha = 0.6, size = 1) + -->
-<!--   geom_line(aes(y = true_model), color = "black", linewidth = 1.5) + -->
-<!--   geom_line(aes(y = ls_fit), color = "blue", linetype = 1, linetype = "dashed") + -->
-<!--   geom_line(aes(y = mle_fit), color = "green", linetype = 1, linetype = "dotted") + -->
-<!--   labs(x = "Time (days)", y = "Daily Cases", -->
-<!--        title = "Comparison of Fitting Methods") + -->
-<!--   scale_color_manual(values = c("red", "black", "blue", "green")) + -->
-<!--   theme_minimal() + -->
-<!--   theme(legend.position = "bottom") -->
-<!-- ``` -->
 </section></section>
 <section>
-<section id="part-vi-advanced-methods" class="title-slide slide level1 center">
-<h1>Part VI: Advanced Methods</h1>
+<section id="advanced-methods" class="title-slide slide level1 center">
+<h1>Advanced Methods</h1>
 
 </section>
 <section id="beyond-least-squares-and-mle" class="slide level2">
 <h2>Beyond Least Squares and MLE</h2>
-<p><strong><span style="color: tomato;">Why We Need Advanced Methods:</span></strong></p>
+<p><span style="color: tomato;"><strong>Why We Need Advanced Methods:</strong></span></p>
 <ul>
 <li>Parameter identifiability issues</li>
 <li>Complex error structures</li>
@@ -1168,7 +1098,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="bayesian-methods-mcmc" class="slide level2">
 <h2>Bayesian Methods: MCMC</h2>
-<p><strong><span style="color: blue;">Core Idea:</span></strong> Treat parameters as random variables with prior distributions</p>
+<p><span style="color: #FFFF00;"><strong>Core Idea:</strong></span> Treat parameters as random variables with prior distributions</p>
 <p><strong>Bayes’ Theorem:</strong> <span class="math display">\[P(\theta | \mathbf{y}) = \frac{P(\mathbf{y} | \theta) P(\theta)}{P(\mathbf{y})}\]</span></p>
 </section>
 <section id="advantages" class="slide level2">
@@ -1183,43 +1113,64 @@ Comparison with True Values:</code></pre>
 <section id="example-with-stan" class="slide level2">
 <h2>Example with Stan</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># Stan model for SIR fitting</span></span>
-<span id="cb36-2"><a href=""></a>stan_code <span class="ot">&lt;-</span> <span class="st">"</span></span>
-<span id="cb36-3"><a href=""></a><span class="st">data {</span></span>
-<span id="cb36-4"><a href=""></a><span class="st">  int&lt;lower=0&gt; N;</span></span>
-<span id="cb36-5"><a href=""></a><span class="st">  vector[N] time;</span></span>
-<span id="cb36-6"><a href=""></a><span class="st">  int&lt;lower=0&gt; cases[N];</span></span>
-<span id="cb36-7"><a href=""></a><span class="st">  real&lt;lower=0&gt; S0;</span></span>
-<span id="cb36-8"><a href=""></a><span class="st">  real&lt;lower=0&gt; I0;</span></span>
-<span id="cb36-9"><a href=""></a><span class="st">  real&lt;lower=0&gt; R0;</span></span>
-<span id="cb36-10"><a href=""></a><span class="st">}</span></span>
-<span id="cb36-11"><a href=""></a></span>
-<span id="cb36-12"><a href=""></a><span class="st">parameters {</span></span>
-<span id="cb36-13"><a href=""></a><span class="st">  real&lt;lower=0&gt; beta;</span></span>
-<span id="cb36-14"><a href=""></a><span class="st">  real&lt;lower=0&gt; gamma;</span></span>
-<span id="cb36-15"><a href=""></a><span class="st">  real&lt;lower=0&gt; sigma;</span></span>
-<span id="cb36-16"><a href=""></a><span class="st">}</span></span>
-<span id="cb36-17"><a href=""></a></span>
-<span id="cb36-18"><a href=""></a><span class="st">model {</span></span>
-<span id="cb36-19"><a href=""></a><span class="st">  // Priors</span></span>
-<span id="cb36-20"><a href=""></a><span class="st">  beta ~ normal(0.3, 0.1);</span></span>
-<span id="cb36-21"><a href=""></a><span class="st">  gamma ~ normal(0.1, 0.05);</span></span>
-<span id="cb36-22"><a href=""></a><span class="st">  sigma ~ exponential(1);</span></span>
-<span id="cb36-23"><a href=""></a></span>
-<span id="cb36-24"><a href=""></a><span class="st">  // Likelihood</span></span>
-<span id="cb36-25"><a href=""></a><span class="st">  for(i in 1:N) {</span></span>
-<span id="cb36-26"><a href=""></a><span class="st">    // Solve ODE (simplified)</span></span>
-<span id="cb36-27"><a href=""></a><span class="st">    real S = S0 * exp(-beta * I0 * time[i]);</span></span>
-<span id="cb36-28"><a href=""></a><span class="st">    real I = I0 * exp((beta * S0 - gamma) * time[i]);</span></span>
-<span id="cb36-29"><a href=""></a><span class="st">    cases[i] ~ normal(I * 1000, sigma);</span></span>
-<span id="cb36-30"><a href=""></a><span class="st">  }</span></span>
-<span id="cb36-31"><a href=""></a><span class="st">}</span></span>
-<span id="cb36-32"><a href=""></a><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36" data-code-line-numbers="3-15|17-24|26-30|32-40|42-47|49-52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># Stan model for SIR fitting</span></span>
+<span id="cb36-2"><a href=""></a><span class="st">"</span></span>
+<span id="cb36-3"><a href=""></a><span class="st">// SIR model in Stan (walkthrough)                                        </span></span>
+<span id="cb36-4"><a href=""></a><span class="st">// Functions block: derivative of [S, I, R]                               </span></span>
+<span id="cb36-5"><a href=""></a><span class="st">functions {</span></span>
+<span id="cb36-6"><a href=""></a><span class="st">  vector SIR(real t, vector y, array[] real theta) {                      </span></span>
+<span id="cb36-7"><a href=""></a><span class="st">    real S = y[1]; real I = y[2]; real R = y[3];</span></span>
+<span id="cb36-8"><a href=""></a><span class="st">    real beta = theta[1]; real gamma = theta[2];</span></span>
+<span id="cb36-9"><a href=""></a><span class="st">    vector[3] dydt;</span></span>
+<span id="cb36-10"><a href=""></a><span class="st">    dydt[1] = -beta * S * I;</span></span>
+<span id="cb36-11"><a href=""></a><span class="st">    dydt[2] =  beta * S * I - gamma * I;</span></span>
+<span id="cb36-12"><a href=""></a><span class="st">    dydt[3] =  gamma * I;</span></span>
+<span id="cb36-13"><a href=""></a><span class="st">    return dydt;</span></span>
+<span id="cb36-14"><a href=""></a><span class="st">  }</span></span>
+<span id="cb36-15"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-16"><a href=""></a></span>
+<span id="cb36-17"><a href=""></a><span class="st">// Data block: obs counts &amp; time grid                                     </span></span>
+<span id="cb36-18"><a href=""></a><span class="st">data {</span></span>
+<span id="cb36-19"><a href=""></a><span class="st">  int&lt;lower=1&gt; n_obs;</span></span>
+<span id="cb36-20"><a href=""></a><span class="st">  int&lt;lower=1&gt; n_pop;</span></span>
+<span id="cb36-21"><a href=""></a><span class="st">  array[n_obs] int y;</span></span>
+<span id="cb36-22"><a href=""></a><span class="st">  real t0;</span></span>
+<span id="cb36-23"><a href=""></a><span class="st">  array[n_obs] real ts;</span></span>
+<span id="cb36-24"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-25"><a href=""></a></span>
+<span id="cb36-26"><a href=""></a><span class="st">// Parameters: beta, gamma, S0                                             </span></span>
+<span id="cb36-27"><a href=""></a><span class="st">parameters {</span></span>
+<span id="cb36-28"><a href=""></a><span class="st">  array[2] real&lt;lower=0&gt; theta;     // {beta, gamma}</span></span>
+<span id="cb36-29"><a href=""></a><span class="st">  real&lt;lower=0,upper=1&gt; S0;         // initial susceptible fraction</span></span>
+<span id="cb36-30"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-31"><a href=""></a></span>
+<span id="cb36-32"><a href=""></a><span class="st">// Transformed params: ODE solve + Poisson rate                            </span></span>
+<span id="cb36-33"><a href=""></a><span class="st">transformed parameters {</span></span>
+<span id="cb36-34"><a href=""></a><span class="st">  vector[3] y_init;</span></span>
+<span id="cb36-35"><a href=""></a><span class="st">  array[n_obs] vector[3] y_hat;</span></span>
+<span id="cb36-36"><a href=""></a><span class="st">  array[n_obs] real lambda;</span></span>
+<span id="cb36-37"><a href=""></a><span class="st">  y_init[1] = S0; y_init[2] = 1 - S0; y_init[3] = 0;</span></span>
+<span id="cb36-38"><a href=""></a><span class="st">  y_hat = ode_rk45(SIR, y_init, t0, ts, theta);</span></span>
+<span id="cb36-39"><a href=""></a><span class="st">  for (i in 1:n_obs) lambda[i] = y_hat[i, 2] * n_pop;</span></span>
+<span id="cb36-40"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-41"><a href=""></a></span>
+<span id="cb36-42"><a href=""></a><span class="st">// Model: priors + likelihood                                             </span></span>
+<span id="cb36-43"><a href=""></a><span class="st">model {</span></span>
+<span id="cb36-44"><a href=""></a><span class="st">  theta ~ lognormal(0, 1);</span></span>
+<span id="cb36-45"><a href=""></a><span class="st">  S0    ~ beta(1, 1);</span></span>
+<span id="cb36-46"><a href=""></a><span class="st">  y     ~ poisson(lambda);</span></span>
+<span id="cb36-47"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-48"><a href=""></a></span>
+<span id="cb36-49"><a href=""></a><span class="st">// GQ: derived R0                                                          </span></span>
+<span id="cb36-50"><a href=""></a><span class="st">generated quantities {</span></span>
+<span id="cb36-51"><a href=""></a><span class="st">  real R_0 = theta[1] / theta[2];</span></span>
+<span id="cb36-52"><a href=""></a><span class="st">}</span></span>
+<span id="cb36-53"><a href=""></a><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="particle-filtering" class="slide level2">
 <h2>Particle Filtering</h2>
-<p><strong><span style="color: blue;">Core Idea:</span></strong> Sequential Monte Carlo method for state-space models</p>
+<p><span style="color: #FFFF00;"><strong>Core Idea:</strong></span> Sequential Monte Carlo method for state-space models</p>
 <p><strong>When to Use:</strong></p>
 <ul>
 <li>Real-time parameter estimation</li>
@@ -1265,7 +1216,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="approximate-bayesian-computation-abc" class="slide level2">
 <h2>Approximate Bayesian Computation (ABC)</h2>
-<p><strong><span style="color: blue;">Core Idea:</span></strong> Approximate posterior without likelihood evaluation</p>
+<p><span style="color: #FFFF00;"><strong>Core Idea:</strong></span> Approximate posterior without likelihood evaluation</p>
 <p><strong>When to Use:</strong></p>
 <ul>
 <li>Complex likelihoods</li>
@@ -1296,7 +1247,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section id="ensemble-methods" class="slide level2">
 <h2>Ensemble Methods</h2>
-<p><strong><span style="color: blue;">Core Idea:</span></strong> Combine multiple models or methods</p>
+<p><span style="color: #FFFF00;"><strong>Core Idea:</strong></span> Combine multiple models or methods</p>
 <p><strong>Types:</strong></p>
 <ul>
 <li><strong>Model Ensembles</strong>: Average predictions from different models</li>
@@ -1314,8 +1265,8 @@ Comparison with True Values:</code></pre>
 </ul>
 </section></section>
 <section>
-<section id="part-vii-practical-considerations" class="title-slide slide level1 center">
-<h1>Part VII: Practical Considerations</h1>
+<section id="practical-considerations" class="title-slide slide level1 center">
+<h1>Practical Considerations</h1>
 
 </section>
 <section id="common-fitting-problems" class="slide level2">
@@ -1429,8 +1380,8 @@ Comparison with True Values:</code></pre>
 </ul>
 </section></section>
 <section>
-<section id="part-viii-conclusions" class="title-slide slide level1 center">
-<h1>Part VIII: Conclusions</h1>
+<section id="conclusions" class="title-slide slide level1 center">
+<h1>Conclusions</h1>
 
 </section>
 <section id="key-takeaways" class="slide level2">
@@ -1470,11 +1421,11 @@ Comparison with True Values:</code></pre>
 <p><strong>For Complex Models:</strong> Bayesian Methods</p>
 <p><strong>For Real-time:</strong> Particle Filtering</p>
 <p><strong>For Model Comparison:</strong> ABC or MCMC</p>
-<p><strong><span style="color: tomato;">General Principle:</span></strong> Start simple, add complexity as needed</p>
+<p><span style="color: tomato;"><strong>General Principle:</strong></span> Start simple, add complexity as needed</p>
 </section>
 <section id="final-thoughts" class="slide level2">
 <h2>Final Thoughts</h2>
-<p><strong><span style="color: tomato;">Model fitting is both art and science:</span></strong></p>
+<p><span style="color: tomato;"><strong>Model fitting is both art and science:</strong></span></p>
 <ul>
 <li>Requires domain expertise</li>
 <li>Demands statistical rigor</li>
@@ -1484,7 +1435,7 @@ Comparison with True Values:</code></pre>
 </section>
 <section class="slide level2">
 
-<p><strong><span style="color: blue;">The goal is not just to fit models, but to:</span></strong></p>
+<p><span style="color: #FFFF00;"><strong>The goal is not just to fit models, but to:</strong></span></p>
 <ul>
 <li>Understand disease dynamics</li>
 <li>Make reliable predictions</li>
@@ -1511,6 +1462,7 @@ Comparison with True Values:</code></pre>
 <ul>
 <li><a href="https://journals.sagepub.com/doi/10.1177/2515245917744314">Introduction to the Concept of Likelihood and Its Applications</a></li>
 <li><em>Key considerations for model fitting and calibration</em>: <a href="https://www.sciencedirect.com/science/article/pii/S1755436519300441?via%3Dihub">Choices and trade-offs in inference with infectious disease models</a></li>
+<li><em>A compilation of model fitting tutorials</em>: <a href="https://www.sciencedirect.com/science/article/pii/S1755436520300220">Tooling-up for infectious disease transmission modelling</a></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1557,6 +1509,7 @@ Comparison with True Values:</code></pre>
 <ul>
 <li><a href="https://mc-stan.org/learn-stan/case-studies/boarding_school_case_study.html">Bayesian workflow for disease transmission modeling in Stan</a></li>
 <li><a href="https://kingaa.github.io/pomp/vignettes/getting_started.html">POMP</a></li>
+<li><a href="https://mrc-ide.github.io/odin-monty/">Odin and Monty</a></li>
 </ul>
 </section>
 <section id="references" class="slide level2">
@@ -1972,6 +1925,158 @@ Comparison with True Values:</code></pre>
           }
         });
       }
+          let selectedAnnoteEl;
+          const selectorForAnnotation = ( cell, annotation) => {
+            let cellAttr = 'data-code-cell="' + cell + '"';
+            let lineAttr = 'data-code-annotation="' +  annotation + '"';
+            const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+            return selector;
+          }
+          const selectCodeLines = (annoteEl) => {
+            const doc = window.document;
+            const targetCell = annoteEl.getAttribute("data-target-cell");
+            const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+            const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+            const lineIds = lines.map((line) => {
+              return targetCell + "-" + line;
+            })
+            let top = null;
+            let height = null;
+            let parent = null;
+            if (lineIds.length > 0) {
+                //compute the position of the single el (top and bottom and make a div)
+                const el = window.document.getElementById(lineIds[0]);
+                top = el.offsetTop;
+                height = el.offsetHeight;
+                parent = el.parentElement.parentElement;
+              if (lineIds.length > 1) {
+                const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                height = bottom - top;
+              }
+              if (top !== null && height !== null && parent !== null) {
+                // cook up a div (if necessary) and position it 
+                let div = window.document.getElementById("code-annotation-line-highlight");
+                if (div === null) {
+                  div = window.document.createElement("div");
+                  div.setAttribute("id", "code-annotation-line-highlight");
+                  div.style.position = 'absolute';
+                  parent.appendChild(div);
+                }
+                div.style.top = top - 2 + "px";
+                div.style.height = height + 4 + "px";
+                div.style.left = 0;
+                let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                if (gutterDiv === null) {
+                  gutterDiv = window.document.createElement("div");
+                  gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                  gutterDiv.style.position = 'absolute';
+                  const codeCell = window.document.getElementById(targetCell);
+                  const gutter = codeCell.querySelector('.code-annotation-gutter');
+                  gutter.appendChild(gutterDiv);
+                }
+                gutterDiv.style.top = top - 2 + "px";
+                gutterDiv.style.height = height + 4 + "px";
+              }
+              selectedAnnoteEl = annoteEl;
+            }
+          };
+          const unselectCodeLines = () => {
+            const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+            elementsIds.forEach((elId) => {
+              const div = window.document.getElementById(elId);
+              if (div) {
+                div.remove();
+              }
+            });
+            selectedAnnoteEl = undefined;
+          };
+            // Handle positioning of the toggle
+        window.addEventListener(
+          "resize",
+          throttle(() => {
+            elRect = undefined;
+            if (selectedAnnoteEl) {
+              selectCodeLines(selectedAnnoteEl);
+            }
+          }, 10)
+        );
+        function throttle(fn, ms) {
+        let throttle = false;
+        let timer;
+          return (...args) => {
+            if(!throttle) { // first call gets through
+                fn.apply(this, args);
+                throttle = true;
+            } else { // all the others get throttled
+                if(timer) clearTimeout(timer); // cancel #2
+                timer = setTimeout(() => {
+                  fn.apply(this, args);
+                  timer = throttle = false;
+                }, ms);
+            }
+          };
+        }
+          const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+          for (let i=0; i<annoteTargets.length; i++) {
+            const annoteTarget = annoteTargets[i];
+            const targetCell = annoteTarget.getAttribute("data-target-cell");
+            const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+            const contentFn = () => {
+              const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              if (content) {
+                const tipContent = content.cloneNode(true);
+                tipContent.classList.add("code-annotation-tip-content");
+                return tipContent.outerHTML;
+              }
+            }
+            const config = {
+              allowHTML: true,
+              content: contentFn,
+              onShow: (instance) => {
+                selectCodeLines(instance.reference);
+                instance.reference.classList.add('code-annotation-active');
+                window.tippy.hideAll();
+              },
+              onHide: (instance) => {
+                unselectCodeLines();
+                instance.reference.classList.remove('code-annotation-active');
+              },
+              maxWidth: 300,
+              delay: [50, 0],
+              duration: [200, 0],
+              offset: [5, 10],
+              arrow: true,
+              appendTo: function(el) {
+                return el.parentElement.parentElement.parentElement;
+              },
+              interactive: true,
+              interactiveBorder: 10,
+              theme: 'light-border',
+              placement: 'right',
+              popperOptions: {
+                modifiers: [
+                {
+                  name: 'flip',
+                  options: {
+                    flipVariations: false, // true by default
+                    allowedAutoPlacements: ['right'],
+                    fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                  },
+                },
+                {
+                  name: 'preventOverflow',
+                  options: {
+                    mainAxis: false,
+                    altAxis: false
+                  }
+                }
+                ]        
+              }      
+            };
+            window.tippy(annoteTarget, config); 
+          }
       const findCites = (el) => {
         const parentEl = el.parentElement;
         if (parentEl) {
@@ -2011,7 +2116,7 @@ Comparison with True Values:</code></pre>
       }
     });
     </script>
-    <script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
+    <script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom"});
     (function() {
       let previousOnload = window.onload;
       window.onload = () => {

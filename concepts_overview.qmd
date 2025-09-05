@@ -1,0 +1,87 @@
+# Conceptual Foundations
+
+------------------------------------------------------------------------
+
+## What is Model Fitting?
+
+**<span style="color: #FFFF00;">Definition:</span>** The process of finding parameter values that make a mathematical model's predictions as close as possible to observed data.
+
+------------------------------------------------------------------------
+
+## Mathematical Formulation
+
+$$\hat{\theta} = \arg\min_{\theta} \mathcal{L}(\theta, \mathbf{y})$$
+
+Where:
+
+-   $\theta$ = parameter vector (e.g., $\beta, \gamma$)
+-   $\mathbf{y}$ = observed data
+-   $\mathcal{L}$ = loss/objective function
+
+------------------------------------------------------------------------
+
+## The SIR Model as Our Example
+
+**Differential Equations:**
+
+$$\frac{dS}{dt} = -\beta SI$$ $$\frac{dI}{dt} = \beta SI - \gamma I$$ $$\frac{dR}{dt} = \gamma I$$
+
+------------------------------------------------------------------------
+
+### Parameters to Estimate
+
+-   <span style="color: tomato;">$\beta$ = transmission rate</span>
+-   <span style="color: tomato;">$\gamma$ = recovery rate</span>
+
+------------------------------------------------------------------------
+
+## Key Quantities
+
+-   <span style="color: #FFFF00;">$R_0 = \frac{\beta}{\gamma}$ (basic reproduction number)</span>
+-   <span style="color: #FFFF00;">Infectious period = $\frac{1}{\gamma}$</span>
+
+------------------------------------------------------------------------
+
+## Sources of Uncertainty
+
+### Model Uncertainty
+
+-   Wrong model structure
+-   Missing compartments or processes
+
+------------------------------------------------------------------------
+
+### Parameter Uncertainty
+
+-   True parameter values unknown
+-   Multiple parameter sets give similar fits
+
+------------------------------------------------------------------------
+
+### Observation Uncertainty
+
+-   Measurement error
+-   Reporting delays
+-   Underreporting
+
+------------------------------------------------------------------------
+
+### Process Uncertainty
+
+-   Stochasticity in disease transmission
+-   Environmental variability
+
+------------------------------------------------------------------------
+
+## The Fitting Challenge
+
+**<span style="color: tomato;">Identifiability Problem:</span>** Multiple parameter combinations can produce similar model outputs
+
+**Example:**
+
+-   High $\beta$, high $\gamma$
+-   Low $\beta$, low $\gamma$
+
+Both might give similar epidemic curves!
+
+**<span style="color: #FFFF00;">Solution:</span>** Use additional information (e.g., known infectious period)

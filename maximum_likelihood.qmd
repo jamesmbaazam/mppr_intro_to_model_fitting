@@ -1,0 +1,205 @@
+# Maximum Likelihood Estimation
+
+------------------------------------------------------------------------
+
+## Maximum Likelihood: The Probabilistic Approach
+
+**<span style="color: #FFFF00;">Core Idea:</span>** Find parameter values that make the observed data most probable
+
+**Mathematical Formulation:** $$\hat{\theta} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \prod_{i=1}^{n} f(y_i | \theta)$$
+
+Where: - $L(\theta)$ = likelihood function - $f(y_i | \theta)$ = probability density of observation $i$
+
+------------------------------------------------------------------------
+
+**In Practice:** Maximize log-likelihood $$\hat{\theta} = \arg\max_{\theta} \ell(\theta) = \arg\max_{\theta} \sum_{i=1}^{n} \log f(y_i | \theta)$$
+
+------------------------------------------------------------------------
+
+## Why Maximum Likelihood?
+
+**<span style="color: #FFFF00;">Theoretical Advantages:</span>**
+
+-   <span style="color: #FFFF00;">Principled statistical framework</span>
+-   <span style="color: #FFFF00;">Provides uncertainty quantification</span>
+-   <span style="color: #FFFF00;">Enables model comparison (AIC, BIC)</span>
+-   <span style="color: #FFFF00;">Asymptotically optimal properties</span>
+
+------------------------------------------------------------------------
+
+**<span style="color: tomato;">Practical Benefits:</span>**
+
+-   <span style="color: tomato;">Confidence intervals</span>
+-   <span style="color: tomato;">Hypothesis testing</span>
+-   <span style="color: tomato;">Model selection</span>
+-   <span style="color: tomato;">Incorporates different error structures</span>
+
+------------------------------------------------------------------------
+
+## Choosing a Probability Distribution
+
+**For Count Data (Cases):**
+
+-   **Poisson**: $Y_i \sim \text{Poisson}(\lambda_i)$
+-   **Negative Binomial**: $Y_i \sim \text{NB}(\mu_i, \phi)$
+
+------------------------------------------------------------------------
+
+## Choosing a Probability Distribution
+
+**For Continuous Data:**
+
+-   **Normal**: $Y_i \sim N(\mu_i, \sigma^2)$
+-   **Log-normal**: $\log Y_i \sim N(\log \mu_i, \sigma^2)$
+
+**For Our SIR Example:** We'll use Poisson since we're modeling case counts
+
+------------------------------------------------------------------------
+
+## MLE Implementation: Poisson Likelihood
+
+```{r mle-implementation, echo=TRUE}
+# Define negative log-likelihood function
+nll_function <- function(beta, gamma, data) {
+  # Simulate model
+  out <- ode(y = init_conds, times = data$time,
+             func = sir_model, parms = c(beta = beta, gamma = gamma))
+
+  # Model predictions (scaled to cases)
+  predicted <- out[,"I"] * 1000
+
+  # Poisson negative log-likelihood
+  nll <- -sum(dpois(data$observed, lambda = predicted, log = TRUE))
+
+  return(nll)
+}
+
+# Use optimization to find MLE
+library(bbmle)
+fit_mle <- mle2(nll_function,
+                start = list(beta = 0.2, gamma = 0.1),
+                data = list(data = data),
+                method = "L-BFGS-B",
+                lower = c(0.01, 0.01),
+                upper = c(1.0, 0.5))
+
+# Extract results
+mle_params <- coef(fit_mle)
+mle_se <- sqrt(diag(vcov(fit_mle)))
+
+cat("MLE Results:\n")
+cat("Beta:", round(mle_params[1], 3), "±", round(mle_se[1], 3), "\n")
+cat("Gamma:", round(mle_params[2], 3), "±", round(mle_se[2], 3), "\n")
+cat("R0:", round(mle_params[1]/mle_params[2], 2), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Uncertainty Quantification with MLE
+
+```{r mle-uncertainty, echo=TRUE, fig.width=10, fig.height=6}
+# Profile likelihood for uncertainty
+prof <- profile(fit_mle)
+plot(prof, absVal = TRUE, main = "Profile Likelihood")
+
+# Confidence intervals
+confint(fit_mle, level = 0.95)
+
+# Compare with true values
+cat("\nComparison with True Values:\n")
+cat("True Beta:", true_params[1], "\n")
+cat("MLE Beta:", round(mle_params[1], 3), "\n")
+cat("True Gamma:", true_params[2], "\n")
+cat("MLE Gamma:", round(mle_params[2], 3), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Model Comparison with MLE
+
+```{r model-comparison, echo=TRUE}
+# Fit different models and compare
+# Model 1: SIR with Poisson
+# Model 2: SIR with Negative Binomial
+
+# Negative Binomial likelihood
+nll_nb <- function(beta, gamma, phi, data) {
+  out <- ode(y = init_conds, times = data$time,
+             func = sir_model, parms = c(beta = beta, gamma = gamma))
+
+  predicted <- out[,"I"] * 1000
+
+  # Negative Binomial negative log-likelihood
+  nll <- -sum(dnbinom(data$observed, mu = predicted, size = phi, log = TRUE))
+
+  return(nll)
+}
+
+# Fit NB model
+fit_nb <- mle2(nll_nb,
+               start = list(beta = 0.2, gamma = 0.1, phi = 10),
+               data = list(data = data),
+               method = "L-BFGS-B",
+               lower = c(0.01, 0.01, 0.1),
+               upper = c(1.0, 0.5, 100))
+
+# Compare models
+cat("Model Comparison:\n")
+cat("Poisson AIC:", AIC(fit_mle), "\n")
+cat("Negative Binomial AIC:", AIC(fit_nb), "\n")
+cat("Delta AIC:", AIC(fit_nb) - AIC(fit_mle), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Strengths of Maximum Likelihood
+
+**Statistical Rigor:**
+
+-   Principled probabilistic framework
+-   Asymptotic optimality properties
+-   Natural uncertainty quantification
+-   Enables formal hypothesis testing
+
+------------------------------------------------------------------------
+
+## Practical Benefits
+
+-   Confidence intervals and standard errors
+-   Model comparison via AIC/BIC
+-   Handles different error structures
+-   Extensible to complex models
+
+------------------------------------------------------------------------
+
+## Limitations of Maximum Likelihood
+
+**Computational Challenges:**
+
+-   More complex than least squares
+-   Requires optimization algorithms
+-   Can get stuck in local minima
+-   Sensitive to starting values
+
+------------------------------------------------------------------------
+
+## Statistical Assumptions
+
+-   Requires specification of error distribution
+-   Assumes model structure is correct
+-   Asymptotic properties may not hold
+-   Can be sensitive to outliers
+
+------------------------------------------------------------------------
+
+## Identifiability Issues
+
+-   Still suffers from parameter identifiability
+-   Profile likelihood can be computationally expensive
+-   May not converge for complex models
+
+------------------------------------------------------------------------
+
+## R implementation practicals {background-color="#447099" transition="fade-in"}
+
+- Let's turn to the [tutorials](https://github.com/jamesmbaazam/mppr_intro_to_fitting_practicals)
