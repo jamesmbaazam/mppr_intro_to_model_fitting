@@ -5,3 +5,26 @@
 
 /.quarto/
 /_site/
+
+# Quarto rendered outputs
+*.html
+*.pdf
+
+# Reveal.js support files (if copied locally)
+*_files/
+*_cache/
+
+# Quarto metadata
+.DS_Store
+.quarto/
+
+# LaTeX build artifacts (from beamer/pdf)
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fls
+*.fdb_latexmk
