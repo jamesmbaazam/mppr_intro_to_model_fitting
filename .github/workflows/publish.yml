@@ -26,9 +26,14 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Install dependencies
+      - name: Install renv
         run: |
-          install.packages(c("rmarkdown", "knitr"))
+          install.packages("renv")
+        shell: Rscript {0}
+
+      - name: Restore renv dependencies
+        run: |
+          renv::restore()
         shell: Rscript {0}
 
       # Install TinyTeX for PDF rendering
